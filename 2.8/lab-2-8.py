@@ -10,8 +10,8 @@ m = manager.connect(
 )
 
 netconf_filter = """
-<filter>
- <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native" />
+<filter xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+    <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native" />
 </filter>
 """
 
