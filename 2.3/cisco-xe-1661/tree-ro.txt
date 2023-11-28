@@ -1,0 +1,2741 @@
+module: cisco-bridge-domain
+  +--ro bridge-domain-state
+     +--ro system-capabilities
+     |  +--ro max-bd?                    uint32
+     |  +--ro max-ac-per-bd?             uint32
+     |  +--ro max-pw-per-bd?             uint32
+     |  +--ro max-vfi-per-bd?            uint32
+     |  +--ro max-sh-group-per-bd?       uint32
+     |  +--ro max-interflex-if-per-bd?   uint32
+     +--ro module-capabilities
+     |  +--ro modules* [name]
+     |     +--ro name                   string
+     |     +--ro max-mac-per-bd?        uint32
+     |     +--ro max-pdd-edge-bd?       uint32
+     |     +--ro max-bd?                uint32
+     |     +--ro max-ac-per-bd?         uint32
+     |     +--ro max-pw-per-bd?         uint32
+     |     +--ro max-vfi-per-bd?        uint32
+     |     +--ro max-sh-group-per-bd?   uint32
+     +--ro bridge-domains
+     |  +--ro bridge-domain* [id]
+     |     +--ro id                    string
+     |     +--ro bd-state              bridge-domain-state-type
+     |     +--ro create-time?          yang:timestamp
+     |     +--ro last-status-change?   yang:timeticks
+     |     +--ro mac-limit-reached?    boolean
+     |     +--ro p2mp-pw-disabled?     boolean
+     |     +--ro members
+     |        +--ro ac-member* [interface]
+     |        |  +--ro interface           if:interface-state-ref
+     |        |  +--ro static-mac-count?   uint32
+     |        |  +--ro dai-stats
+     |        |  |  +--ro packet-drops?   yang:counter64
+     |        |  |  +--ro byte-drops?     yang:counter64
+     |        |  +--ro ipsg-stats
+     |        |  |  +--ro packet-drops?   yang:counter64
+     |        |  |  +--ro byte-drops?     yang:counter64
+     |        |  +--ro storm-control
+     |        |     +--ro drop-counter* [traffic-class]
+     |        |        +--ro traffic-class    cbridge:eth-traffic-class
+     |        |        +--ro packet-drops?    yang:counter64
+     |        |        +--ro octate-drops?    yang:counter64
+     |        +--ro vfi-member* [interface]
+     |        |  +--ro interface    if:interface-state-ref
+     |        |  +--ro flooding
+     |        |     +--ro status* [traffic-class]
+     |        |        +--ro traffic-class    eth-traffic-class
+     |        |        +--ro enabled?         boolean
+     |        +--ro access-pw-member* [vc-peer-address vc-id]
+     |           +--ro vc-peer-address    pw-oper-vc-peer-addr-ref
+     |           +--ro vc-id              pw-oper-vc-id-ref
+     |           +--ro flooding
+     |              +--ro status* [traffic-class]
+     |                 +--ro traffic-class    eth-traffic-class
+     |                 +--ro enabled?         boolean
+     +--ro mac-table* [bd-id mac-address]
+        +--ro bd-id          string
+        +--ro mac-address    yang:mac-address
+        +--ro mac-type?      enumeration
+        +--ro interface      if:interface-ref
+        +--ro secure-mac?    boolean
+        +--ro ntfy-mac?      boolean
+        +--ro age?           yang:timeticks
+        +--ro location?      string
+    |  +--ro output
+    |     +--ro errstr?   string
+    |  +--ro output
+    |     +--ro errstr?   string
+       +--ro output
+          +--ro errstr?   string
+       +--ro id?         bd:bridge-domain-oper-ref
+       +--ro bd-state?   bridge-domain-state-type
+       +--ro time?       yang:timestamp
+module: cisco-ethernet
+    +--ro ethernet
+       +--ro duplex?                enumeration
+       +--ro supported-mtu-range
+          +--ro min-mtu-size?   uint16
+          +--ro max-mtu-size?   uint16
+module: cisco-ia
+    |  +--ro output
+    |     +--ro result?   string
+    |  +--ro output
+    |     +--ro result?   string
+    |  +--ro output
+    |     +--ro result?   string
+    |  +--ro output
+    |     +--ro result?   string
+    |  +--ro output
+    |     +--ro result?   string
+       +--ro output
+          +--ro result?   string
+module: Cisco-IOS-XE-acl-oper
+  +--ro access-lists
+     +--ro access-list* [access-control-list-name]
+        +--ro access-control-list-name    string
+        +--ro access-list-entries
+           +--ro access-list-entry* [rule-name]
+              +--ro rule-name                        uint32
+              +--ro access-list-entries-oper-data
+                 +--ro match-counter?   yang:counter64
+module: Cisco-IOS-XE-bfd-oper
+  +--ro bfd-state
+     +--ro sessions
+        +--ro session* [type]
+           +--ro type                 bfd-ios-xe-oper:bfd-oper-session-type
+           +--ro bfd-tunnel-paths
+           |  +--ro bfd-tunnel-path* [interface lsp-type]
+           |     +--ro interface       string
+           |     +--ro lsp-type        bfd-ios-xe-oper:bfd-lsp-type
+           |     +--ro ld?             uint32
+           |     +--ro rd?             uint32
+           |     +--ro remote-state?   bfd-ios-xe-oper:bfd-remote-state-type
+           |     +--ro state?          bfd-ios-xe-oper:bfd-state-type
+           +--ro bfd-circuits
+           |  +--ro bfd-circuit* [interface vcid]
+           |     +--ro interface       string
+           |     +--ro vcid            uint32
+           |     +--ro ld?             uint32
+           |     +--ro rd?             uint32
+           |     +--ro remote-state?   bfd-ios-xe-oper:bfd-remote-state-type
+           |     +--ro state?          bfd-ios-xe-oper:bfd-state-type
+           +--ro bfd-nbrs
+           |  +--ro bfd-nbr* [ip interface]
+           |     +--ro ip              inet:ip-address
+           |     +--ro interface       string
+           |     +--ro ld?             uint32
+           |     +--ro rd?             uint32
+           |     +--ro remote-state?   bfd-ios-xe-oper:bfd-remote-state-type
+           |     +--ro state?          bfd-ios-xe-oper:bfd-state-type
+           +--ro bfd-mhop-nbrs
+           |  +--ro bfd-mhop-nbr* [ip]
+           |     +--ro ip              inet:ip-address
+           |     +--ro ld?             uint32
+           |     +--ro rd?             uint32
+           |     +--ro remote-state?   bfd-ios-xe-oper:bfd-remote-state-type
+           |     +--ro state?          bfd-ios-xe-oper:bfd-state-type
+           +--ro bfd-mhop-vrf-nbrs
+              +--ro bfd-mhop-vrf-nbr* [ip vrf]
+                 +--ro ip              inet:ip-address
+                 +--ro vrf             string
+                 +--ro ld?             uint32
+                 +--ro rd?             uint32
+                 +--ro remote-state?   bfd-ios-xe-oper:bfd-remote-state-type
+                 +--ro state?          bfd-ios-xe-oper:bfd-state-type
+module: Cisco-IOS-XE-bgp-oper
+  +--ro bgp-state-data
+     +--ro neighbors
+     |  +--ro neighbor* [afi-safi vrf-name neighbor-id]
+     |     +--ro afi-safi                       bgp-common-ios-xe-oper:afi-safi
+     |     +--ro vrf-name                       string
+     |     +--ro neighbor-id                    string
+     |     +--ro description?                   string
+     |     +--ro bgp-version?                   uint16
+     |     +--ro link?                          bgp-ios-xe-oper:bgp-link
+     |     +--ro up-time?                       string
+     |     +--ro last-write?                    string
+     |     +--ro last-read?                     string
+     |     +--ro installed-prefixes?            uint32
+     |     +--ro session-state?                 bgp-ios-xe-oper:bgp-fsm-state
+     |     +--ro negotiated-keepalive-timers
+     |     |  +--ro hold-time?            uint16
+     |     |  +--ro keepalive-interval?   uint16
+     |     +--ro negotiated-cap*                string
+     |     +--ro bgp-neighbor-counters
+     |     |  +--ro sent
+     |     |  |  +--ro opens?             uint32
+     |     |  |  +--ro updates?           uint32
+     |     |  |  +--ro notifications?     uint32
+     |     |  |  +--ro keepalives?        uint32
+     |     |  |  +--ro route-refreshes?   uint32
+     |     |  +--ro received
+     |     |  |  +--ro opens?             uint32
+     |     |  |  +--ro updates?           uint32
+     |     |  |  +--ro notifications?     uint32
+     |     |  |  +--ro keepalives?        uint32
+     |     |  |  +--ro route-refreshes?   uint32
+     |     |  +--ro inq-depth?    uint32
+     |     |  +--ro outq-depth?   uint32
+     |     +--ro connection
+     |     |  +--ro state?               bgp-common-ios-xe-oper:tcp-fsm-state
+     |     |  +--ro mode?                bgp-ios-xe-oper:bgp-mode
+     |     |  +--ro total-established?   uint32
+     |     |  +--ro total-dropped?       uint32
+     |     |  +--ro last-reset?          string
+     |     |  +--ro reset-reason?        string
+     |     +--ro transport
+     |     |  +--ro path-mtu-discovery?   boolean
+     |     |  +--ro local-port?           uint32
+     |     |  +--ro local-host?           inet:ip-address
+     |     |  +--ro foreign-port?         uint32
+     |     |  +--ro foreign-host?         inet:ip-address
+     |     |  +--ro mss?                  uint32
+     |     +--ro prefix-activity
+     |        +--ro sent
+     |        |  +--ro current-prefixes?    uint64
+     |        |  +--ro total-prefixes?      uint64
+     |        |  +--ro implicit-withdraw?   uint64
+     |        |  +--ro explicit-withdraw?   uint64
+     |        |  +--ro bestpaths?           uint64
+     |        |  +--ro multipaths?          uint64
+     |        +--ro received
+     |           +--ro current-prefixes?    uint64
+     |           +--ro total-prefixes?      uint64
+     |           +--ro implicit-withdraw?   uint64
+     |           +--ro explicit-withdraw?   uint64
+     |           +--ro bestpaths?           uint64
+     |           +--ro multipaths?          uint64
+     +--ro address-families
+     |  +--ro address-family* [afi-safi vrf-name]
+     |     +--ro afi-safi                  bgp-common-ios-xe-oper:afi-safi
+     |     +--ro vrf-name                  string
+     |     +--ro router-id?                inet:ip-address
+     |     +--ro bgp-table-version?        uint64
+     |     +--ro routing-table-version?    uint64
+     |     +--ro prefixes
+     |     |  +--ro total-entries?   uint64
+     |     |  +--ro memory-usage?    uint64
+     |     +--ro path
+     |     |  +--ro total-entries?   uint64
+     |     |  +--ro memory-usage?    uint64
+     |     +--ro as-path
+     |     |  +--ro total-entries?   uint64
+     |     |  +--ro memory-usage?    uint64
+     |     +--ro route-map
+     |     |  +--ro total-entries?   uint64
+     |     |  +--ro memory-usage?    uint64
+     |     +--ro filter-list
+     |     |  +--ro total-entries?   uint64
+     |     |  +--ro memory-usage?    uint64
+     |     +--ro activities
+     |     |  +--ro prefixes?        uint64
+     |     |  +--ro paths?           uint64
+     |     |  +--ro scan-interval?   string
+     |     +--ro total-memory?             uint64
+     |     +--ro bgp-neighbor-summaries
+     |        +--ro bgp-neighbor-summary* [id]
+     |           +--ro id                        string
+     |           +--ro bgp-version?              uint32
+     |           +--ro messages-received?        uint64
+     |           +--ro messages-sent?            uint64
+     |           +--ro table-version?            uint64
+     |           +--ro input-queue?              uint64
+     |           +--ro output-queue?             uint64
+     |           +--ro up-time?                  string
+     |           +--ro state?                    bgp-ios-xe-oper:bgp-fsm-state
+     |           +--ro prefixes-received?        uint64
+     |           +--ro dynamically-configured?   boolean
+     +--ro bgp-route-vrfs
+        +--ro bgp-route-vrf* [vrf]
+           +--ro vrf              string
+           +--ro bgp-route-afs
+              +--ro bgp-route-af* [afi-safi]
+                 +--ro afi-safi             bgp-common-ios-xe-oper:afi-safi
+                 +--ro bgp-route-filters
+                    +--ro bgp-route-filter* [route-filter]
+                       +--ro route-filter         bgp-route-ios-xe-oper:bgp-route-filters
+                       +--ro bgp-route-entries
+                          +--ro bgp-route-entry* [prefix]
+                             +--ro prefix              string
+                             +--ro version?            uint32
+                             +--ro available-paths?    uint32
+                             +--ro advertised-to?      string
+                             +--ro bgp-path-entries
+                                +--ro bgp-path-entry* [nexthop]
+                                   +--ro nexthop        string
+                                   +--ro metric?        uint32
+                                   +--ro local-pref?    uint32
+                                   +--ro weight?        uint32
+                                   +--ro as-path?       string
+                                   +--ro origin?        bgp-route-ios-xe-oper:bgp-origin-code
+                                   +--ro path-status
+                                   |  +--ro suppressed?        empty
+                                   |  +--ro damped?            empty
+                                   |  +--ro history?           empty
+                                   |  +--ro valid?             empty
+                                   |  +--ro sourced?           empty
+                                   |  +--ro bestpath?          empty
+                                   |  +--ro internal?          empty
+                                   |  +--ro rib-fail?          empty
+                                   |  +--ro stale?             empty
+                                   |  +--ro multipath?         empty
+                                   |  +--ro backup-path?       empty
+                                   |  +--ro rt-filter?         empty
+                                   |  +--ro best-external?     empty
+                                   |  +--ro additional-path?   empty
+                                   |  +--ro rib-compressed?    empty
+                                   +--ro rpki-status?   bgp-route-ios-xe-oper:bgp-rpki-status
+                                   +--ro community?     string
+module: Cisco-IOS-XE-cdp-oper
+  +--ro cdp-neighbour-details
+     +--ro cdp-neighbour-detail* [device-id]
+        +--ro device-id              uint32
+        +--ro device-name?           string
+        +--ro local-intf-name?       string
+        +--ro port-id?               string
+        +--ro capability?            string
+        +--ro platform-name?         string
+        +--ro version?               string
+        +--ro duplex?                cdp-ios-xe-oper:cdp-duplex
+        +--ro adv-version?           cdp-ios-xe-oper:cdp-adv-version
+        +--ro hello-message
+        |  +--ro oui?             string
+        |  +--ro protocol-id?     string
+        |  +--ro payload-value?   string
+        |  +--ro payload-len?     uint16
+        +--ro vty-mgmt-domain?       string
+        +--ro native-vlan?           uint16
+        +--ro vvid-tag?              uint8
+        +--ro vvid?                  uint16
+        +--ro power?                 uint32
+        +--ro power-request
+        |  +--ro power-request-id?      uint16
+        |  +--ro power-man-id?          uint16
+        |  +--ro power-request-level?   string
+        +--ro power-available
+        |  +--ro power-request-id?   uint16
+        |  +--ro power-man-id?       uint16
+        |  +--ro power-available?    uint32
+        |  +--ro power-man-level?    uint32
+        +--ro unidirectional-mode?   cdp-ios-xe-oper:cdp-unidirectional-mode
+        +--ro spare-pair
+        |  +--ro spare-pair-poe?                  cdp-ios-xe-oper:cdp-yes-no
+        |  +--ro spare-pair-detection-required?   cdp-ios-xe-oper:cdp-yes-no
+        |  +--ro spare-pair-pd-config?            cdp-ios-xe-oper:cdp-enable-disable
+        |  +--ro spare-pair-pse-operational?      cdp-ios-xe-oper:cdp-yes-no
+        +--ro mgmt-address?          inet:ip-address
+        +--ro ip-address?            inet:ip-address
+        +--ro ipv6-address?          inet:ip-address
+        +--ro clns-address?          string
+        +--ro decnet-addr?           string
+        +--ro novell-addr?           string
+        +--ro second-port-status?    string
+        +--ro table-id?              uint16
+module: Cisco-IOS-XE-cfm-oper
+  +--ro cfm-statistics
+     +--ro cfm-meps
+        +--ro cfm-mep* [domain-name ma-name mpid]
+           +--ro domain-name         string
+           +--ro ma-name             string
+           +--ro mpid                uint32
+           +--ro last-cleared
+           |  +--ro (cleared-choice)?
+           |     |  +--ro never?   empty
+           |        +--ro time?    string
+           +--ro ccm-transmitted?    yang:counter64
+           +--ro ccm-seq-errors?     yang:counter64
+           +--ro ltr-unexpected?     yang:counter64
+           +--ro lbr-transmitted?    yang:counter64
+           +--ro lbr-seq-errors?     yang:counter64
+           +--ro lbr-received-ok?    yang:counter64
+           +--ro lbr-received-bad?   yang:counter64
+module: Cisco-IOS-XE-checkpoint-archive-oper
+  +--ro checkpoint-archives
+     +--ro max?        uint8
+     +--ro current?    uint8
+     +--ro recent?     string
+     +--ro archives
+        +--ro archive* [number]
+           +--ro number    uint16
+           +--ro name?     string
+module: Cisco-IOS-XE-diffserv-target-oper
+  +--ro diffserv-interfaces-state
+     +--ro diffserv-interface* [name]
+        +--ro name                     string
+        +--ro diffserv-target-entry* [direction policy-name]
+           +--ro direction                                identityref
+           +--ro policy-name                              string
+           +--ro diffserv-target-classifier-statistics* [classifier-entry-name parent-path]
+              +--ro classifier-entry-name          string
+              +--ro parent-path                    string
+              +--ro classifier-entry-statistics
+              |  +--ro classified-pkts?    uint64
+              |  +--ro classified-bytes?   uint64
+              |  +--ro classified-rate?    uint64
+              +--ro meter-statistics* [meter-id]
+              |  +--ro meter-id               uint16
+              |  +--ro meter-succeed-pkts?    uint64
+              |  +--ro meter-succeed-bytes?   uint64
+              |  +--ro meter-failed-pkts?     uint64
+              |  +--ro meter-failed-bytes?    uint64
+              +--ro queuing-statistics
+                 +--ro output-pkts?        uint64
+                 +--ro output-bytes?       uint64
+                 +--ro queue-size-pkts?    uint64
+                 +--ro queue-size-bytes?   uint64
+                 +--ro drop-pkts?          uint64
+                 +--ro drop-bytes?         uint64
+                 +--ro wred-stats
+                    +--ro early-drop-pkts?    uint64
+                    +--ro early-drop-bytes?   uint64
+module: Cisco-IOS-XE-efp-oper
+  +--ro efp-stats
+     +--ro efp-stat* [id interface]
+        +--ro id           uint32
+        +--ro interface    string
+        +--ro in-pkts?     yang:counter64
+        +--ro in-bytes?    yang:counter64
+        +--ro out-pkts?    yang:counter64
+        +--ro out-bytes?   yang:counter64
+module: Cisco-IOS-XE-environment-oper
+  +--ro environment-sensors
+     +--ro environment-sensor* [name location]
+        +--ro state?             string
+        +--ro current-reading?   uint32
+        +--ro sensor-units?      environment-ios-xe-oper:sensor-units-type
+        +--ro name               string
+        +--ro location           string
+module: Cisco-IOS-XE-flow-monitor-oper
+  +--ro flow-monitors
+     +--ro flow-monitor* [name]
+        +--ro name              string
+        +--ro time-collected?   uint64
+        +--ro flows
+           +--ro flow* [source-address destination-address interface-input is-multicast vrf-id-input source-port destination-port ip-tos ip-protocol]
+              +--ro source-address         string
+              +--ro destination-address    string
+              +--ro interface-input        string
+              +--ro is-multicast           string
+              +--ro vrf-id-input           int64
+              +--ro source-port            int64
+              +--ro destination-port       int64
+              +--ro ip-tos                 string
+              +--ro ip-protocol            int64
+              +--ro interface-output?      string
+              +--ro bytes?                 int64
+              +--ro packets?               int64
+module: Cisco-IOS-XE-ip-sla-oper
+  +--ro ip-sla-stats
+     +--ro sla-oper-entry* [oper-id]
+        +--ro oper-id                   uint32
+        +--ro oper-type?                ip-sla-ios-xe-oper:sla-oper-type
+        +--ro latest-return-code?       ip-sla-ios-xe-oper:sla-return-code
+        +--ro success-count?            uint32
+        +--ro failure-count?            uint32
+        +--ro latest-oper-start-time?   yang:date-and-time
+        +--ro rtt-info
+        |  +--ro latest-rtt
+        |  |  +--ro (latestrtt-choice)?
+        |  |     |  +--ro rtt?              uint64
+        |  |     |  +--ro unknown?          empty
+        |  |        +--ro could-not-find?   empty
+        |  +--ro time-to-live
+        |     +--ro (timetolive-choice)?
+        |        |  +--ro ttl?       uint64
+        |           +--ro forever?   empty
+        +--ro measure-stats
+        |  +--ro intv-start-time?   yang:date-and-time
+        |  +--ro init-count?        uint32
+        |  +--ro complete-count?    uint32
+        |  +--ro valid?             boolean
+        +--ro stats
+           +--ro rtt
+           |  +--ro rtt-count?         uint32
+           |  +--ro sla-time-values
+           |     +--ro min?        uint32
+           |     +--ro avg?        uint32
+           |     +--ro max?        uint32
+           |     +--ro accuracy?   ip-sla-ios-xe-oper:accuracy-type
+           +--ro oneway-latency
+           |  +--ro sample-count?   uint32
+           |  +--ro sd
+           |  |  +--ro min?        uint32
+           |  |  +--ro avg?        uint32
+           |  |  +--ro max?        uint32
+           |  |  +--ro accuracy?   ip-sla-ios-xe-oper:accuracy-type
+           |  +--ro ds
+           |     +--ro min?        uint32
+           |     +--ro avg?        uint32
+           |     +--ro max?        uint32
+           |     +--ro accuracy?   ip-sla-ios-xe-oper:accuracy-type
+           +--ro jitter
+           |  +--ro sd-sample-count?   uint32
+           |  +--ro ds-sample-count?   uint32
+           |  +--ro sd
+           |  |  +--ro min?        uint32
+           |  |  +--ro avg?        uint32
+           |  |  +--ro max?        uint32
+           |  |  +--ro accuracy?   ip-sla-ios-xe-oper:accuracy-type
+           |  +--ro ds
+           |     +--ro min?        uint32
+           |     +--ro avg?        uint32
+           |     +--ro max?        uint32
+           |     +--ro accuracy?   ip-sla-ios-xe-oper:accuracy-type
+           +--ro over-threshold
+           |  +--ro rtt-count?   uint32
+           |  +--ro percent?     uint8
+           +--ro packet-loss
+           |  +--ro unprocessed-packets?   uint32
+           |  +--ro sd-count?              uint32
+           |  +--ro sd-loss
+           |  |  +--ro loss-period-count?           uint32
+           |  |  +--ro loss-period-len-min?         uint32
+           |  |  +--ro loss-period-len-max?         uint32
+           |  |  +--ro inter-loss-period-len-min?   uint32
+           |  |  +--ro inter-loss-period-len-max?   uint32
+           |  +--ro ds-count?              uint32
+           |  +--ro ds-loss
+           |  |  +--ro loss-period-count?           uint32
+           |  |  +--ro loss-period-len-min?         uint32
+           |  |  +--ro loss-period-len-max?         uint32
+           |  |  +--ro inter-loss-period-len-min?   uint32
+           |  |  +--ro inter-loss-period-len-max?   uint32
+           |  +--ro out-of-sequence?       uint32
+           |  +--ro drops?                 uint32
+           |  +--ro late-arrivals?         uint32
+           |  +--ro skipped-packets?       uint32
+           +--ro icmp-packet-loss
+           |  +--ro late-arrivals?               uint32
+           |  +--ro out-of-sequence?             uint32
+           |  +--ro out-of-sequence-sd?          uint32
+           |  +--ro out-of-sequence-ds?          uint32
+           |  +--ro out-of-sequence-both?        uint32
+           |  +--ro skipped-packets?             uint32
+           |  +--ro unprocessed-packets?         uint32
+           |  +--ro packet-loss?                 uint32
+           |  +--ro loss-period-count?           uint32
+           |  +--ro loss-period-len-min?         uint32
+           |  +--ro loss-period-len-max?         uint32
+           |  +--ro inter-loss-period-len-min?   uint32
+           |  +--ro inter-loss-period-len-max?   uint32
+           +--ro voice-score
+              +--ro icpif?   uint32
+              +--ro mos?     uint32
+module: Cisco-IOS-XE-lldp-oper
+  +--ro lldp-entries
+     +--ro lldp-entry* [device-id local-interface connecting-interface]
+        +--ro device-id               string
+        +--ro local-interface         string
+        +--ro connecting-interface    string
+        +--ro ttl?                    uint32
+        +--ro capabilities
+           +--ro repeater?       empty
+           +--ro bridge?         empty
+           +--ro access-point?   empty
+           +--ro router?         empty
+           +--ro telephone?      empty
+           +--ro docsis?         empty
+           +--ro station?        empty
+           +--ro other?          empty
+module: Cisco-IOS-XE-mdt-cfg
+module: Cisco-IOS-XE-mdt-oper
+  +--ro mdt-oper-data
+     +--ro mdt-streams
+     |  +--ro stream*   string
+     +--ro mdt-subscriptions* [subscription-id]
+     |  +--ro subscription-id     uint32
+     |  +--ro base
+     |  |  +--ro stream?                    string
+     |  |  +--ro encoding?                  string
+     |  |  +--ro (update-trigger-choice)?
+     |  |  |  |  +--ro no-trigger?          uint32
+     |  |  |  |  +--ro period               uint32
+     |  |  |     +--ro no-synch-on-start?   boolean
+     |  |  +--ro (filter-type-choice)?
+     |  |     |  +--ro no-filter?           uint32
+     |  |        +--ro xpath?               string
+     |  +--ro type?               mdt-oper:mdt-sub-type
+     |  +--ro state?              mdt-oper:mdt-sub-state
+     |  +--ro comments?           string
+     |  +--ro updates-in?         uint64
+     |  +--ro updates-dampened?   uint64
+     |  +--ro updates-dropped?    uint64
+     |  +--ro mdt-receivers* [address port]
+     |     +--ro protocol?   string
+     |     +--ro state?      mdt-oper:mdt-receiver-state
+     |     +--ro comments?   string
+     |     +--ro address     inet:ip-address
+     |     +--ro port        uint16
+     +--ro mdt-connections* [address port]
+        +--ro transport?           string
+        +--ro peer-id?             string
+        +--ro state?               mdt-oper:mdt-con-state
+        +--ro mdt-sub-con-stats* [sub-id]
+        |  +--ro sub-id             uint32
+        |  +--ro updates-sent?      uint64
+        |  +--ro updates-dropped?   uint64
+        +--ro address              inet:ip-address
+        +--ro port                 uint16
+module: Cisco-IOS-XE-memory-oper
+  +--ro memory-statistics
+     +--ro memory-statistic* [name]
+        +--ro name             string
+        +--ro total-memory?    uint64
+        +--ro used-memory?     uint64
+        +--ro free-memory?     uint64
+        +--ro lowest-usage?    uint64
+        +--ro highest-usage?   uint64
+module: Cisco-IOS-XE-mpls-fwd-oper
+  +--ro mpls-forwarding-table
+     +--ro local-label-entry* [local-label]
+        +--ro local-label        uint32
+        +--ro forwarding-info* [outgoing-interface]
+           +--ro outgoing-interface      union
+           +--ro outgoing-label?         union
+           +--ro connection-info
+           |  +--ro type?        enumeration
+           |  +--ro ip?          inet:ip-address
+           |  +--ro mask?        uint16
+           |  +--ro tunnel-id?   uint32
+           |  +--ro vrf-id?      uint32
+           |  +--ro nh-id?       uint32
+           |  +--ro l2ckt-id?    uint32
+           |  +--ro tunnel-tp
+           |     +--ro tunnel?   uint32
+           |     +--ro src-id
+           |     |  +--ro global?   uint32
+           |     |  +--ro node?     inet:ip-address
+           |     +--ro dst-id
+           |        +--ro global?   uint32
+           |        +--ro node?     inet:ip-address
+           +--ro label-switched-bytes?   uint64
+           +--ro next-hop?               union
+module: Cisco-IOS-XE-mpls-ldp
+     +--ro mpls-ldp-state
+     |  +--ro oper-summary {mpls-ldp-extended}?
+     |  |  +--ro common {mpls-ldp-extended}?
+     |  |  |  +--ro address-families?                           af
+     |  |  |  +--ro number-of-neighbors?                        uint32
+     |  |  |  +--ro number-of-graceful-restart-neighbors?       uint32
+     |  |  |  +--ro number-of-downstream-on-demand-neighbors?   uint32
+     |  |  |  +--ro numberof-ipv4-hello-adj?                    uint32
+     |  |  |  +--ro number-of-ipv4-routes?                      uint32
+     |  |  |  +--ro number-of-ipv4-local-addresses?             uint32
+     |  |  |  +--ro number-of-ldp-interfaces?                   uint32
+     |  |  |  +--ro number-of-ipv4ldp-interfaces?               uint32
+     |  |  +--ro number-of-vrf?                  uint32
+     |  |  +--ro number-of-vrf-oper?             uint32
+     |  |  +--ro number-of-interfaces?           uint32
+     |  |  +--ro number-of-fwd-ref-interfaces?   uint32
+     |  |  +--ro number-of-autocfg-interfaces?   uint32
+     |  |  +--ro no-of-ipv4-rib-tbl?             uint32
+     |  |  +--ro no-of-ipv4-rib-tbl-reg?         uint32
+     |  +--ro forwarding-summary
+     |  |  +--ro pfxs
+     |  |  |  +--ro labeled-pfxs-aggr
+     |  |  |  |  +--ro labeled-pfxs?           uint16
+     |  |  |  |  +--ro labeled-pfxs-partial?   uint16
+     |  |  |  |  +--ro unlabeled-pfxs?         uint16
+     |  |  |  +--ro labeled-pfxs-primary
+     |  |  |  |  +--ro labeled-pfxs?           uint16
+     |  |  |  |  +--ro labeled-pfxs-partial?   uint16
+     |  |  |  |  +--ro unlabeled-pfxs?         uint16
+     |  |  |  +--ro labeled-pfxs-backup
+     |  |  |  |  +--ro labeled-pfxs?           uint16
+     |  |  |  |  +--ro labeled-pfxs-partial?   uint16
+     |  |  |  |  +--ro unlabeled-pfxs?         uint16
+     |  |  |  +--ro total-pfxs?             uint16
+     |  |  |  +--ro ecmp-pfxs?              uint16
+     |  |  |  +--ro protected-pfxs?         uint16
+     |  |  +--ro nhs
+     |  |  |  +--ro total-paths?            uint32
+     |  |  |  +--ro protected-paths?        uint32
+     |  |  |  +--ro backup-paths?           uint32
+     |  |  |  +--ro remote-backup-paths?    uint32
+     |  |  |  +--ro labeled-paths?          uint32
+     |  |  |  +--ro labeled-backup-paths?   uint32
+     |  |  +--ro intfs-fwd-count?   uint16
+     |  |  +--ro local-lbls?        uint16
+     |  +--ro bindings-summary
+     |  |  +--ro binding-total?                 uint32
+     |  |  +--ro binding-no-route?              uint32
+     |  |  +--ro binding-local-no-route?        uint32
+     |  |  +--ro binding-local?                 uint32
+     |  |  +--ro binding-local-null?            uint32
+     |  |  +--ro binding-local-implicit-null?   uint32
+     |  |  +--ro binding-local-explicit-null?   uint32
+     |  |  +--ro binding-local-non-null?        uint32
+     |  |  +--ro binding-local-oor?             uint32
+     |  |  +--ro lowest-allocated-label?        uint32
+     |  |  +--ro highest-allocated-label?       uint32
+     |  |  +--ro binding-remote?                uint32
+     |  +--ro nsr-summary-all {mpls-ldp-nsr}?
+     |  |  +--ro nsr-sum-in-label-reqs-created?       yang:counter32
+     |  |  +--ro nsr-sum-in-label-reqs-freed?         yang:counter32
+     |  |  +--ro nsr-sum-in-label-withdraw-created?   yang:counter32
+     |  |  +--ro nsr-sum-in-label-withdraw-freed?     yang:counter32
+     |  |  +--ro nsr-sum-lcl-addr-withdraw-set?       yang:counter32
+     |  |  +--ro nsr-sum-lcl-addr-withdraw-cleared?   yang:counter32
+     |  +--ro icpm-summary-all {mpls-ldp-iccp}?
+     |  |  +--ro iccp-rg-conn-count?       uint32
+     |  |  +--ro iccp-rg-disconn-count?    uint32
+     |  |  +--ro iccp-rg-notif-count?      uint32
+     |  |  +--ro iccp-rg-app-data-count?   uint32
+     |  |  +--ro icpm-rgid-table-info
+     |  |  |  +--ro red-group* [rg-id]
+     |  |  |     +--ro rg-id             uint32
+     |  |  |     +--ro icpm-protocols* [icpm-type]
+     |  |  |        +--ro icpm-type       identityref
+     |  |  |        +--ro redun-groups* [rg-id]
+     |  |  |           +--ro rg-id        uint32
+     |  |  |           +--ro peer-id?     inet:ip-address
+     |  |  |           +--ro client_id?   uint32
+     |  |  |           +--ro state?       string
+     |  |  |           +--ro iccp-apps* [iccp-app]
+     |  |  |              +--ro iccp-app     identityref
+     |  |  |              +--ro app-state?   iccp-state
+     |  |  |              +--ro ptcl-ver?    uint32
+     |  |  +--ro icpm-session-table
+     |  |     +--ro session-table* [session-id]
+     |  |        +--ro session-id        uint32
+     |  |        +--ro icpm-protocols* [icpm-type]
+     |  |           +--ro icpm-type       identityref
+     |  |           +--ro redun-groups* [rg-id]
+     |  |              +--ro rg-id        uint32
+     |  |              +--ro peer-id?     inet:ip-address
+     |  |              +--ro client_id?   uint32
+     |  |              +--ro state?       string
+     |  |              +--ro iccp-apps* [iccp-app]
+     |  |                 +--ro iccp-app     identityref
+     |  |                 +--ro app-state?   iccp-state
+     |  |                 +--ro ptcl-ver?    uint32
+     |  +--ro parameters
+     |  |  +--ro global-md5-password-enabled?                    boolean
+     |  |  +--ro protocol-version?                               uint32
+     |  |  +--ro keepalive-interval?                             uint32
+     |  |  +--ro session-hold-time?                              uint32
+     |  |  +--ro le-no-route-timeout?                            uint32
+     |  |  +--ro af-binding-withdraw-delay?                      uint32
+     |  |  +--ro max-intf-attached?                              uint32
+     |  |  +--ro max-intf-te?                                    uint32
+     |  |  +--ro max-peer?                                       uint32
+     |  |  +--ro out-of-mem-state?                               yang:counter32
+     |  |  +--ro discovery-quick-start-disabled-on-interfaces?   boolean
+     |  |  +--ro address-family-parameter* [address-family]
+     |  |  |  +--ro address-family                  af
+     |  |  |  +--ro discovery-transport-address?    inet:ip-address
+     |  |  |  +--ro is-accepting-targeted-hellos?   boolean
+     |  |  |  +--ro targeted-hello-filter?          string
+     |  |  +--ro dod-max-hop?                                    uint32
+     |  |  +--ro feature*                                        string
+     |  |  +--ro loop-detection?                                 loop-detection-type
+     |  +--ro capabilities
+     |  |  +--ro capability* [cap-type]
+     |  |     +--ro capability-owner?         string
+     |  |     +--ro cap-type                  uint16
+     |  |     +--ro cap-des?                  string
+     |  |     +--ro capability-data-length?   uint16
+     |  |     +--ro capability-data?          string
+     |  +--ro backoff-parameters
+     |  |  +--ro initial-seconds?   uint32
+     |  |  +--ro maximum-seconds?   uint32
+     |  |  +--ro backoff-seconds?   uint32
+     |  |  +--ro waiting-seconds?   uint32
+     |  +--ro graceful-restart
+     |  |  +--ro is-graceful-restart-configured?                  boolean
+     |  |  +--ro graceful-restart-reconnect-timeout?              uint32
+     |  |  +--ro graceful-restart-forwarding-state-hold-time?     uint32
+     |  |  +--ro is-forwarding-state-hold-timer-running?          empty
+     |  |  +--ro forwarding-state-hold-timer-remaining-seconds?   uint32
+     |  +--ro vrfs
+     |  |  +--ro vrf* [vrf-name]
+     |  |     +--ro vrf-name       string
+     |  |     +--ro vrf-summary {mpls-ldp-extended}?
+     |  |     |  +--ro address-families?                           af
+     |  |     |  +--ro number-of-neighbors?                        uint32
+     |  |     |  +--ro number-of-graceful-restart-neighbors?       uint32
+     |  |     |  +--ro number-of-downstream-on-demand-neighbors?   uint32
+     |  |     |  +--ro numberof-ipv4-hello-adj?                    uint32
+     |  |     |  +--ro number-of-ipv4-routes?                      uint32
+     |  |     |  +--ro number-of-ipv4-local-addresses?             uint32
+     |  |     |  +--ro number-of-ldp-interfaces?                   uint32
+     |  |     |  +--ro number-of-ipv4ldp-interfaces?               uint32
+     |  |     +--ro afs
+     |  |        +--ro af* [af-name]
+     |  |           +--ro af-name              af
+     |  |           +--ro interface-summary
+     |  |           |  +--ro known-ip-interface-count?                   uint32
+     |  |           |  +--ro known-ip-interface-ldp-enabled?             uint32
+     |  |           |  +--ro configured-attached-interface?              uint32
+     |  |           |  +--ro configured-te-interface?                    uint32
+     |  |           |  +--ro forward-references?                         uint32
+     |  |           |  +--ro auto-config-disabled?                       uint32
+     |  |           |  +--ro auto-config?                                uint32
+     |  |           |  +--ro auto-config-forward-reference-interfaces?   uint32
+     |  |           +--ro igp
+     |  |              +--ro sync* [interface]
+     |  |                 +--ro interface                 if:interface-ref
+     |  |                 +--ro igp-sync-state?           igp-sync-state
+     |  |                 +--ro is-delay-timer-running?   empty
+     |  |                 +--ro delay-timer-remaining?    uint32
+     |  |                 +--ro igp-sync-down-reason?     identityref
+     |  |                 +--ro peers* []
+     |  |                    +--ro peer-id?            string
+     |  |                    +--ro is-gr-enabled?      boolean
+     |  |                    +--ro is-chkpt-created?   empty
+     |  +--ro discovery
+     |  |  +--ro discovery-stats
+     |  |  |  +--ro num-of-ldp-interfaces?          uint32
+     |  |  |  +--ro num-of-active-ldp-interfaces?   uint32
+     |  |  |  +--ro num-of-lnk-disc-xmit?           uint32
+     |  |  |  +--ro num-of-tgt-disc-xmit?           uint32
+     |  |  |  +--ro num-of-lnk-disc-recv?           uint32
+     |  |  |  +--ro num-of-tgt-disc-recv?           uint32
+     |  |  +--ro link-hello-state
+     |  |  |  +--ro link-hellos* [interface nbr-transport-addr]
+     |  |  |     +--ro interface               if:interface-ref
+     |  |  |     +--ro nbr-transport-addr      inet:ip-address
+     |  |  |     +--ro hello-interval?         uint32
+     |  |  |     +--ro local-src-addr?         inet:ip-address
+     |  |  |     +--ro local-transport-addr?   inet:ip-address
+     |  |  |     +--ro nbr-src-addr?           inet:ip-address
+     |  |  |     +--ro nbr-ldp-id?             string
+     |  |  |     +--ro session-up?             empty
+     |  |  |     +--ro nbr-hold-time?          uint32
+     |  |  |     +--ro next-hello?             uint32
+     |  |  |     +--ro hold-time-remaining?    uint32
+     |  |  +--ro targeted-hellos
+     |  |     +--ro targeted-hello-interval?    uint32
+     |  |     +--ro targeted-hello-hold-time?   uint32
+     |  |     +--ro targeted-hello* [vrf-name target-address]
+     |  |        +--ro vrf-name                   string
+     |  |        +--ro local-address?             inet:ip-address
+     |  |        +--ro target-address             inet:ip-address
+     |  |        +--ro neighbor-ldp-identifier?   string
+     |  |        +--ro state?                     dhc-state
+     |  |        +--ro nbr-hold-time?             uint32
+     |  |        +--ro next-hello?                uint32
+     |  |        +--ro hold-time-remaining?       uint32
+     |  +--ro forwarding
+     |  |  +--ro forwarding-vrf-summs
+     |  |  |  +--ro forwarding-vrf-summ* [vrf-name]
+     |  |  |     +--ro vrf-name           string
+     |  |  |     +--ro pfxs
+     |  |  |     |  +--ro labeled-pfxs-aggr
+     |  |  |     |  |  +--ro labeled-pfxs?           uint16
+     |  |  |     |  |  +--ro labeled-pfxs-partial?   uint16
+     |  |  |     |  |  +--ro unlabeled-pfxs?         uint16
+     |  |  |     |  +--ro labeled-pfxs-primary
+     |  |  |     |  |  +--ro labeled-pfxs?           uint16
+     |  |  |     |  |  +--ro labeled-pfxs-partial?   uint16
+     |  |  |     |  |  +--ro unlabeled-pfxs?         uint16
+     |  |  |     |  +--ro labeled-pfxs-backup
+     |  |  |     |  |  +--ro labeled-pfxs?           uint16
+     |  |  |     |  |  +--ro labeled-pfxs-partial?   uint16
+     |  |  |     |  |  +--ro unlabeled-pfxs?         uint16
+     |  |  |     |  +--ro total-pfxs?             uint16
+     |  |  |     |  +--ro ecmp-pfxs?              uint16
+     |  |  |     |  +--ro protected-pfxs?         uint16
+     |  |  |     +--ro nhs
+     |  |  |     |  +--ro total-paths?            uint32
+     |  |  |     |  +--ro protected-paths?        uint32
+     |  |  |     |  +--ro backup-paths?           uint32
+     |  |  |     |  +--ro remote-backup-paths?    uint32
+     |  |  |     |  +--ro labeled-paths?          uint32
+     |  |  |     |  +--ro labeled-backup-paths?   uint32
+     |  |  |     +--ro intfs-fwd-count?   uint16
+     |  |  |     +--ro local-lbls?        uint16
+     |  |  +--ro forwarding-detail* [vrf-name prefix]
+     |  |     +--ro vrf-name         string
+     |  |     +--ro prefix           inet:ip-prefix
+     |  |     +--ro fwd-prefix?      inet:ip-address
+     |  |     +--ro route
+     |  |     |  +--ro version?                       uint32
+     |  |     |  +--ro priority?                      uint8
+     |  |     |  +--ro source?                        uint16
+     |  |     |  +--ro type?                          uint16
+     |  |     |  +--ro metric?                        uint32
+     |  |     |  +--ro is-local-vrf-leaked?           boolean
+     |  |     |  +--ro routing-update-count?          yang:counter32
+     |  |     |  +--ro routing-update-timestamp?      uint64
+     |  |     |  +--ro routing-update-age?            uint64
+     |  |     |  +--ro local-label?                   uint32
+     |  |     |  +--ro forwarding-update-count?       yang:counter32
+     |  |     |  +--ro forwarding-update-timestamp?   uint64
+     |  |     |  +--ro forwarding-update-age?         uint64
+     |  |     +--ro table-id?        uint32
+     |  |     +--ro prefix-length?   uint8
+     |  |     +--ro paths* []
+     |  |        +--ro routing
+     |  |        |  +--ro next-hop?              inet:ip-address
+     |  |        |  +--ro remote-node-id?        inet:ip-address
+     |  |        |  +--ro has-remote-lfa-bkup?   boolean
+     |  |        |  +--ro interface?             if:interface-ref
+     |  |        |  +--ro nh-is-overriden?       empty
+     |  |        |  +--ro nexthop-id?            uint32
+     |  |        |  +--ro next-hop-table-id?     uint32
+     |  |        |  +--ro load-metric?           uint32
+     |  |        |  +--ro path-id?               uint8
+     |  |        |  +--ro bkup-path-id?          uint8
+     |  |        |  +--ro path-type?             identityref
+     |  |        +--ro mpls
+     |  |           +--ro mpls-outgoing-info
+     |  |           |  +--ro nexthop-peer-ldp-ident
+     |  |           |  |  +--ro lsr-id?           inet:ip-address
+     |  |           |  |  +--ro label-space-id?   uint16
+     |  |           |  +--ro out-label?                               uint32
+     |  |           |  +--ro out-label-type?                          identityref
+     |  |           |  +--ro out-label-owner?                         identityref
+     |  |           |  +--ro is-from-graceful-restartable-neighbor?   boolean
+     |  |           |  +--ro is-stale?                                boolean
+     |  |           +--ro remote-lfa
+     |  |              +--ro mpls-outgoing-info
+     |  |              |  +--ro nexthop-peer-ldp-ident
+     |  |              |  |  +--ro lsr-id?           inet:ip-address
+     |  |              |  |  +--ro label-space-id?   uint16
+     |  |              |  +--ro out-label?                               uint32
+     |  |              |  +--ro out-label-type?                          identityref
+     |  |              |  +--ro out-label-owner?                         identityref
+     |  |              |  +--ro is-from-graceful-restartable-neighbor?   boolean
+     |  |              |  +--ro is-stale?                                boolean
+     |  |              +--ro has-remote-lfa-bkup?   boolean
+     |  +--ro bindings
+     |  |  +--ro bindings-sum-afs
+     |  |  |  +--ro binding-sum-af* [vrf-name af-name]
+     |  |  |     +--ro vrf-name                       string
+     |  |  |     +--ro af-name                        af
+     |  |  |     +--ro binding-total?                 uint32
+     |  |  |     +--ro binding-no-route?              uint32
+     |  |  |     +--ro binding-local-no-route?        uint32
+     |  |  |     +--ro binding-local?                 uint32
+     |  |  |     +--ro binding-local-null?            uint32
+     |  |  |     +--ro binding-local-implicit-null?   uint32
+     |  |  |     +--ro binding-local-explicit-null?   uint32
+     |  |  |     +--ro binding-local-non-null?        uint32
+     |  |  |     +--ro binding-local-oor?             uint32
+     |  |  |     +--ro lowest-allocated-label?        uint32
+     |  |  |     +--ro highest-allocated-label?       uint32
+     |  |  |     +--ro binding-remote?                uint32
+     |  |  +--ro binding* [vrf-name prefix]
+     |  |     +--ro vrf-name                             string
+     |  |     +--ro prefix                               inet:ip-prefix
+     |  |     +--ro fwd-prefix?                          inet:ip-address
+     |  |     +--ro prefix-length?                       uint8
+     |  |     +--ro local-label?                         uint32
+     |  |     +--ro le-local-binding-revision?           uint32
+     |  |     +--ro le-local-label-state?                local-label-state
+     |  |     +--ro is-no-route?                         boolean
+     |  |     +--ro label-oor?                           boolean
+     |  |     +--ro advertise-prefix-filter?             string
+     |  |     +--ro advertise-lsr-filter?                string
+     |  |     +--ro config-enforced-local-label-value?   boolean
+     |  |     +--ro remote-binding* []
+     |  |     |  +--ro assigning-peer-ldp-ident
+     |  |     |  |  +--ro lsr-id?           inet:ip-address
+     |  |     |  |  +--ro label-space-id?   uint16
+     |  |     |  +--ro remote-label?               uint32
+     |  |     |  +--ro is-stale?                   boolean
+     |  |     +--ro peers-advertised-to* []
+     |  |        +--ro lsr-id?           inet:ip-address
+     |  |        +--ro label-space-id?   uint16
+     |  +--ro neighbors
+     |  |  +--ro neighbor* [vrf-name lsr-id]
+     |  |  |  +--ro vrf-name                      string
+     |  |  |  +--ro lsr-id                        inet:ip-address
+     |  |  |  +--ro label-space-id?               uint32
+     |  |  |  +--ro session-role?                 enumeration
+     |  |  |  +--ro session-prot-ver?             uint32
+     |  |  |  +--ro up-time-seconds?              uint32
+     |  |  |  +--ro nbr-path-vector-limit?        int32
+     |  |  |  +--ro nbr-stats
+     |  |  |  |  +--ro ta-pies-sent?                yang:counter32
+     |  |  |  |  +--ro ta-pies-rcvd?                yang:counter32
+     |  |  |  |  +--ro num-of-nbr-ipv4-discovery?   uint32
+     |  |  |  |  +--ro num-of-nbr-ipv6-discovery?   uint32
+     |  |  |  |  +--ro num-of-nbr-ipv4-addresses?   uint32
+     |  |  |  |  +--ro num-of-nbr-ipv6-addresses?   uint32
+     |  |  |  |  +--ro num-of-nbr-ipv4-lbl?         uint32
+     |  |  |  |  +--ro num-of-nbr-ipv6-lbl?         uint32
+     |  |  |  +--ro graceful-restart-adjacency
+     |  |  |  |  +--ro is-graceful-restartable?            boolean
+     |  |  |  |  +--ro reconnect-timeout?                  uint32
+     |  |  |  |  +--ro recovery-time?                      uint32
+     |  |  |  |  +--ro is-liveness-timer-running?          empty
+     |  |  |  |  +--ro liveness-timer-remaining-seconds?   uint32
+     |  |  |  |  +--ro is-recovery-timer-running?          empty
+     |  |  |  |  +--ro recovery-timer-remaining-seconds?   uint32
+     |  |  |  |  +--ro down-nbr-flap-count?                uint32
+     |  |  |  |  +--ro down-nbr-down-reason?               identityref
+     |  |  |  +--ro downstream-on-demand?         boolean
+     |  |  |  +--ro tcp-information
+     |  |  |  |  +--ro foreign-host?   inet:ip-address
+     |  |  |  |  +--ro local-host?     inet:ip-address
+     |  |  |  |  +--ro foreign-port?   uint16
+     |  |  |  |  +--ro local-port?     uint16
+     |  |  |  |  +--ro is-md5-on?      boolean
+     |  |  |  |  +--ro up-time?        string
+     |  |  |  +--ro capabilities
+     |  |  |  |  +--ro sent-caps* [cap-type]
+     |  |  |  |  |  +--ro cap-type                  uint16
+     |  |  |  |  |  +--ro cap-des?                  string
+     |  |  |  |  |  +--ro capability-data-length?   uint16
+     |  |  |  |  |  +--ro capability-data?          string
+     |  |  |  |  +--ro received-caps* [cap-type]
+     |  |  |  |     +--ro cap-type                  uint16
+     |  |  |  |     +--ro cap-des?                  string
+     |  |  |  |     +--ro capability-data-length?   uint16
+     |  |  |  |     +--ro capability-data?          string
+     |  |  |  +--ro peer-hold-time?               uint32
+     |  |  |  +--ro peer-keep-alive-interval?     uint32
+     |  |  |  +--ro peer-state?                   adj-state
+     |  |  |  +--ro inbound-ipv4?                 string
+     |  |  |  +--ro inbound-ipv6-filter?          string
+     |  |  |  +--ro outbound-ipv4-filter?         string
+     |  |  |  +--ro outbound-ipv6-filter?         string
+     |  |  |  +--ro has-sp?                       boolean
+     |  |  |  +--ro sp-state?                     string
+     |  |  |  +--ro sp-filter?                    string
+     |  |  |  +--ro sp-has-duration?              boolean
+     |  |  |  +--ro sp-duration?                  uint32
+     |  |  |  +--ro spht-running?                 boolean
+     |  |  |  +--ro spht-remaining?               uint32
+     |  |  |  +--ro bgp-advertisement-state?      nbr-bgp-advt-state {mpls-ldp-bgp}?
+     |  |  |  +--ro advertise-bgp-prefixes?       boolean {mpls-ldp-bgp}?
+     |  |  |  +--ro client*                       string
+     |  |  |  +--ro duplicate-address*            inet:ip-address
+     |  |  |  +--ro nbr-bound-address*            inet:ip-address
+     |  |  +--ro nbr-adjs* []
+     |  |  |  +--ro (hello-type)?
+     |  |  |     |  +--ro interface?        if:interface-ref
+     |  |  |        +--ro local-address?    inet:ip-address
+     |  |  |        +--ro target-address?   inet:ip-address
+     |  |  |        +--ro target-state?     dhc-state
+     |  |  +--ro stats-info
+     |  |  |  +--ro message-out
+     |  |  |  |  +--ro total-count?                 yang:counter32
+     |  |  |  |  +--ro init-count?                  yang:counter32
+     |  |  |  |  +--ro address-count?               yang:counter32
+     |  |  |  |  +--ro address-withdraw-count?      yang:counter32
+     |  |  |  |  +--ro label-map-count?             yang:counter32
+     |  |  |  |  +--ro label-withdraw-count?        yang:counter32
+     |  |  |  |  +--ro label-release-count?         yang:counter32
+     |  |  |  |  +--ro label-request-count?         yang:counter32
+     |  |  |  |  +--ro label-abort-request-count?   yang:counter32
+     |  |  |  |  +--ro notification-count?          yang:counter32
+     |  |  |  |  +--ro keep-alive-count?            yang:counter32
+     |  |  |  |  +--ro iccp-rg-conn-count?          yang:counter32
+     |  |  |  |  +--ro iccp-rg-disconn-count?       yang:counter32
+     |  |  |  |  +--ro iccp-rg-notif-count?         yang:counter32
+     |  |  |  |  +--ro iccp-rg-app-data-count?      yang:counter32
+     |  |  |  +--ro message-in
+     |  |  |  |  +--ro total-count?                 yang:counter32
+     |  |  |  |  +--ro init-count?                  yang:counter32
+     |  |  |  |  +--ro address-count?               yang:counter32
+     |  |  |  |  +--ro address-withdraw-count?      yang:counter32
+     |  |  |  |  +--ro label-map-count?             yang:counter32
+     |  |  |  |  +--ro label-withdraw-count?        yang:counter32
+     |  |  |  |  +--ro label-release-count?         yang:counter32
+     |  |  |  |  +--ro label-request-count?         yang:counter32
+     |  |  |  |  +--ro label-abort-request-count?   yang:counter32
+     |  |  |  |  +--ro notification-count?          yang:counter32
+     |  |  |  |  +--ro keep-alive-count?            yang:counter32
+     |  |  |  |  +--ro iccp-rg-conn-count?          yang:counter32
+     |  |  |  |  +--ro iccp-rg-disconn-count?       yang:counter32
+     |  |  |  |  +--ro iccp-rg-notif-count?         yang:counter32
+     |  |  |  |  +--ro iccp-rg-app-data-count?      yang:counter32
+     |  |  |  +--ro discon-time?            yang:timestamp
+     |  |  |  +--ro session-attempts?       yang:counter32
+     |  |  |  +--ro sess-reject-no-hello?   yang:counter32
+     |  |  |  +--ro sess-rej-ad?            yang:counter32
+     |  |  |  +--ro sess-rej-max-pdu?       yang:counter32
+     |  |  |  +--ro sess-rej-lr?            yang:counter32
+     |  |  |  +--ro bad-ldpid?              yang:counter32
+     |  |  |  +--ro bad-pdu-len?            yang:counter32
+     |  |  |  +--ro bad-msg-len?            yang:counter32
+     |  |  |  +--ro bad-tlv-len?            yang:counter32
+     |  |  |  +--ro malformed-tlv-val?      yang:counter32
+     |  |  |  +--ro keep-alive-exp?         yang:counter32
+     |  |  |  +--ro shutdown-notif-rec?     yang:counter32
+     |  |  |  +--ro shutdow-notif-sent?     yang:counter32
+     |  |  +--ro backoffs
+     |  |  |  +--ro backoff-seconds?   uint32
+     |  |  |  +--ro waiting-seconds?   uint32
+     |  |  +--ro nsr-nbr-detail {mpls-ldp-nsr}?
+     |  |     +--ro nsr-state?                             identityref {mpls-ldp-nsr}?
+     |  |     +--ro nsr-nbr-sync-state?                    identityref {mpls-ldp-nsr}?
+     |  |     +--ro nsr-nbr-last-sync-error?               identityref {mpls-ldp-nsr}?
+     |  |     +--ro nsr-nbr-last-sync-nack-reason?         identityref {mpls-ldp-nsr}?
+     |  |     +--ro nsr-nbr-pend-label-req-resps?          yang:counter32
+     |  |     +--ro nsr-nbr-pend-label-withdraw-resps?     yang:counter32
+     |  |     +--ro nsr-nbr-pend-lcl-addr-withdraw-acks?   yang:counter32
+     |  |     +--ro nsr-nbr-in-label-reqs-created?         yang:counter32
+     |  |     +--ro nsr-nbr-in-label-reqs-freed?           yang:counter32
+     |  |     +--ro nsr-nbr-in-label-withdraw-created?     yang:counter32
+     |  |     +--ro nsr-nbr-in-label-withdraw-freed?       yang:counter32
+     |  |     +--ro nsr-nbr-lcl-addr-withdraw-set?         yang:counter32
+     |  |     +--ro nsr-nbr-lcl-addr-withdraw-cleared?     yang:counter32
+     |  |     +--ro nsr-nbr-xmit-ctxt-enq?                 yang:counter32
+     |  |     +--ro nsr-nbr-xmit-ctxt-deq?                 yang:counter32
+     |  |     +--ro nbr-sess
+     |  |     |  +--ro last-stat-change?    yang:timestamp
+     |  |     |  +--ro state?               enumeration
+     |  |     |  +--ro keep-alive-remain?   uint32
+     |  |     |  +--ro keep-alive-time?     uint32
+     |  |     |  +--ro max-pdu?             uint32
+     |  |     |  +--ro discon-time?         yang:timestamp
+     |  |     |  +--ro unknown-mess-err?    yang:counter32
+     |  |     |  +--ro unknown-tlv?         yang:counter32
+     |  |     +--ro path-vector-limit?                     int32
+     |  +--ro label-ranges
+     |     +--ro label-range* [lr-min lr-max]
+     |        +--ro lr-min    uint32
+     |        +--ro lr-max    uint32
+    |  +--ro output
+    |     +--ro status?   string
+    |  +--ro output
+    |     +--ro status?   string
+       +--ro output
+          +--ro status?   string
+    |  +--ro lsr-id?             inet:ip-address
+    |  +--ro label-space-id?     uint16
+    |  +--ro init-sess-thresh?   int32
+    |  +--ro lsr-id?                   inet:ip-address
+    |  +--ro label-space-id?           uint16
+    |  +--ro path-vector-limit?        int32
+    |  +--ro peer-id?                  inet:ip-address
+    |  +--ro peer-path-vector-limit?   int32
+    |  +--ro lsr-id?                    inet:ip-address
+    |  +--ro label-space-id?            uint16
+    |  +--ro peer-id?                   inet:ip-address
+    |  +--ro session-state?             session-state
+    |  +--ro session-discon-time?       yang:timestamp
+    |  +--ro unknown-mes-type-errors?   yang:counter32
+    |  +--ro unknown-tlv-errors?        yang:counter32
+       +--ro lsr-id?                    inet:ip-address
+       +--ro label-space-id?            uint16
+       +--ro peer-id?                   inet:ip-address
+       +--ro state?                     session-state
+       +--ro session-discon-time?       yang:timestamp
+       +--ro unknown-mes-type-errors?   yang:counter32
+       +--ro unknown-tlv-errors?        yang:counter32
+module: Cisco-IOS-XE-native
+module: Cisco-IOS-XE-platform-oper
+  +--ro components
+     +--ro component* [cname]
+        +--ro cname                     string
+        +--ro state
+        |  +--ro type?          platform-ios-xe-oper:platform-comp-type
+        |  +--ro id?            string
+        |  +--ro description?   string
+        |  +--ro mfg-name?      string
+        |  +--ro version?       string
+        |  +--ro serial-no?     string
+        |  +--ro part-no?       string
+        |  +--ro temp
+        |     +--ro temp-instant?   decimal64
+        |     +--ro temp-avg?       decimal64
+        |     +--ro temp-max?       decimal64
+        |     +--ro temp-min?       decimal64
+        +--ro platform-properties
+        |  +--ro platform-property* [name]
+        |     +--ro name                                   string
+        |     +--ro value
+        |     |  +--ro (property-value-choice)?
+        |     |     |  +--ro string?        string
+        |     |     |  +--ro boolean?       boolean
+        |     |     |  +--ro intsixfour?    int64
+        |     |     |  +--ro uintsixfour?   uint64
+        |     |        +--ro decimal?       decimal64
+        |     +--ro configurable?                          boolean
+        |     +--ro parent-platform-component-cname-key?   string
+        +--ro platform-subcomponents
+           +--ro platform-subcomponent* [name]
+              +--ro name                                   string
+              +--ro parent-platform-component-cname-key?   string
+module: Cisco-IOS-XE-platform-software-oper
+  +--ro cisco-platform-software
+     +--ro control-processes
+        +--ro control-process* [fru slotnum baynum chassisnum]
+           +--ro fru                       platform-sw-ios-xe-oper:b-fru
+           +--ro slotnum                   int16
+           +--ro baynum                    int16
+           +--ro chassisnum                int16
+           +--ro control-process-status?   string
+           +--ro updated?                  uint64
+           +--ro load-average-stats
+           |  +--ro load-average-status?   string
+           +--ro load-avg-minutes
+           |  +--ro load-avg-minute* [number]
+           |     +--ro number     uint64
+           |     +--ro average?   decimal64
+           |     +--ro status
+           |        +--ro condition?          string
+           |        +--ro threshold-status?   string
+           |        +--ro threshold-value?    decimal64
+           +--ro memory-stats
+           |  +--ro memory-status?       string
+           |  +--ro total?               uint64
+           |  +--ro used-number?         uint64
+           |  +--ro used-percent?        uint64
+           |  +--ro free-number?         uint64
+           |  +--ro free-percent?        uint64
+           |  +--ro available-number?    uint64
+           |  +--ro available-percent?   uint64
+           |  +--ro committed-number?    uint64
+           |  +--ro committed-percent?   uint8
+           |  +--ro status
+           |     +--ro warning-threshold-percent?    uint32
+           |     +--ro critical-threshold-percent?   uint32
+           +--ro per-core-stats
+              +--ro per-core-stat* [name]
+                 +--ro name       uint32
+                 +--ro user?      decimal64
+                 +--ro system?    decimal64
+                 +--ro nice?      decimal64
+                 +--ro idle?      decimal64
+                 +--ro irq?       decimal64
+                 +--ro sirq?      decimal64
+                 +--ro io-wait?   decimal64
+module: Cisco-IOS-XE-process-cpu-oper
+  +--ro cpu-usage
+     +--ro cpu-utilization
+        +--ro five-seconds?          uint8
+        +--ro five-seconds-intr?     uint8
+        +--ro one-minute?            uint8
+        +--ro five-minutes?          uint8
+        +--ro cpu-usage-processes
+           +--ro cpu-usage-process* [pid name]
+              +--ro pid                 uint32
+              +--ro name                string
+              +--ro tty?                uint16
+              +--ro total-run-time?     uint64
+              +--ro invocation-count?   uint32
+              +--ro avg-run-time?       uint64
+              +--ro five-seconds?       decimal64
+              +--ro one-minute?         decimal64
+              +--ro five-minutes?       decimal64
+module: Cisco-IOS-XE-process-memory-oper
+  +--ro memory-usage-processes
+     +--ro memory-usage-process* [pid name]
+        +--ro pid                 uint32
+        +--ro name                string
+        +--ro tty?                uint16
+        +--ro allocated-memory?   uint64
+        +--ro freed-memory?       uint64
+        +--ro holding-memory?     uint64
+        +--ro get-buffers?        uint32
+        +--ro ret-buffers?        uint32
+module: Cisco-IOS-XE-rpc
+    |  +--ro output
+    |     +--ro result?   string
+    |  +--ro output
+    |     +--ro result?   string
+    |  +--ro output
+    |     +--ro result?   string
+       +--ro output
+          +--ro result?   string
+module: Cisco-IOS-XE-trustsec-oper
+  +--ro trustsec-state
+     +--ro cts-rolebased-sgtmaps
+     |  +--ro cts-rolebased-sgtmap* [ip vrf-name]
+     |     +--ro ip          inet:ip-prefix
+     |     +--ro vrf-name    string
+     |     +--ro sgt?        int32
+     |     +--ro source?     trustsec-ios-xe-oper:cts-odm-binding-source
+     +--ro cts-rolebased-policies
+     |  +--ro cts-rolebased-policy* [src-sgt dst-sgt]
+     |     +--ro src-sgt                   int32
+     |     +--ro dst-sgt                   int32
+     |     +--ro sgacl-name?               string
+     |     +--ro num-of-sgacl?             uint32
+     |     +--ro monitor-mode?             boolean
+     |     +--ro policy-life-time?         uint64
+     |     +--ro last-updated-time?        yang:date-and-time
+     |     +--ro total-deny-count?         uint64
+     |     +--ro total-permit-count?       uint64
+     |     +--ro software-deny-count?      uint64
+     |     +--ro software-permit-count?    uint64
+     |     +--ro hardware-deny-count?      uint64
+     |     +--ro hardware-permit-count?    uint64
+     |     +--ro software-monitor-count?   uint64
+     |     +--ro hardware-monitor-count?   uint64
+     +--ro cts-sxp-connections
+        +--ro cts-sxp-connection* [peer-ip vrf-name]
+           +--ro peer-ip              inet:ip-address
+           +--ro vrf-name             string
+           +--ro source-ip?           inet:ip-address
+           +--ro speaker-state?       trustsec-ios-xe-oper:sxp-con-state
+           +--ro speaker-duration?    uint64
+           +--ro listener-state?      trustsec-ios-xe-oper:sxp-con-state
+           +--ro listener-duration?   uint64
+           +--ro local-mode?          trustsec-ios-xe-oper:sxp-con-mode
+module: Cisco-IOS-XE-virtual-service-oper
+  +--ro virtual-services
+     +--ro virtual-service* [name]
+        +--ro name                  string
+        +--ro details
+        |  +--ro state?                    string
+        |  +--ro package-information
+        |  |  +--ro name?          string
+        |  |  +--ro path?          string
+        |  |  +--ro application
+        |  |  |  +--ro name?                string
+        |  |  |  +--ro installed-version?   string
+        |  |  |  +--ro description?         string
+        |  |  +--ro signing
+        |  |  |  +--ro key-type?   string
+        |  |  |  +--ro method?     string
+        |  |  +--ro licensing
+        |  |     +--ro name?      string
+        |  |     +--ro version?   string
+        |  +--ro detailed-guest-status
+        |  |  +--ro processes
+        |  |     +--ro name?     string
+        |  |     +--ro status?   string
+        |  |     +--ro pid?      string
+        |  |     +--ro uptime?   string
+        |  |     +--ro memory?   string
+        |  +--ro activated-profile-name?   string
+        |  +--ro resource-reservation
+        |  |  +--ro disk?     uint64
+        |  |  +--ro memory?   uint64
+        |  |  +--ro cpu?      uint64
+        |  +--ro guest-interface?          string
+        |  +--ro resource-admission
+        |     +--ro state?        string
+        |     +--ro disk-space?   string
+        |     +--ro memory?       string
+        |     +--ro cpu?          uint64
+        |     +--ro vcpus?        string
+        +--ro utilization
+        |  +--ro name?          string
+        |  +--ro cpu-util
+        |  |  +--ro requested-application-util?   uint64
+        |  |  +--ro actual-application-util?      uint64
+        |  |  +--ro cpu-state?                    string
+        |  +--ro memory-util
+        |     +--ro memory-allocation?   string
+        |     +--ro memory-used?         string
+        +--ro network-utils
+        |  +--ro network-util* [name alias]
+        |     +--ro name          string
+        |     +--ro alias         string
+        |     +--ro rx-packets?   uint64
+        |     +--ro rx-bytes?     uint64
+        |     +--ro rx-errors?    uint64
+        |     +--ro tx-packets?   uint64
+        |     +--ro tx-bytes?     uint64
+        |     +--ro tx-errors?    uint64
+        +--ro storage-utils
+        |  +--ro storage-util* [name alias]
+        |     +--ro name           string
+        |     +--ro alias          string
+        |     +--ro rd-bytes?      uint64
+        |     +--ro rd-requests?   uint64
+        |     +--ro errors?        uint64
+        |     +--ro wr-bytes?      uint64
+        |     +--ro wr-requests?   uint64
+        |     +--ro capacity?      uint64
+        |     +--ro available?     string
+        |     +--ro used?          uint64
+        |     +--ro usage?         string
+        +--ro attached-devices
+        |  +--ro attached-device* [name]
+        |     +--ro name     string
+        |     +--ro type?    string
+        |     +--ro alias?   string
+        +--ro network-interfaces
+        |  +--ro network-interface* [mac-address]
+        |     +--ro mac-address           yang:mac-address
+        |     +--ro attached-interface?   string
+        +--ro guest-routes
+           +--ro guest-route* [route]
+              +--ro route    string
+module: cisco-pw
+  +--ro pseudowire-state
+     +--ro pseudowires* [vc-peer-address vc-id vc-owner-type vc-name vc-index]
+        +--ro vc-type?                   identityref
+        +--ro vc-owner-type              enumeration
+        +--ro vc-owner-name?             string
+        +--ro vc-psn-type?               enumeration
+        +--ro vc-peer-address            inet:ip-address
+        +--ro vc-id                      pw-vc-id-type
+        +--ro vc-index                   pw-vc-index-type
+        +--ro vc-local-group-id?         pw-group-id-type
+        +--ro vc-control-word?           boolean
+        +--ro vc-local-if-mtu?           uint32
+        +--ro vc-remote-group-id?        pw-group-id-type
+        +--ro vc-remote-control-word?    enumeration
+        +--ro vc-remote-if-mtu?          uint32
+        +--ro vc-outbound-label?         uint32
+        +--ro vc-inbound-label?          uint32
+        +--ro vc-name                    string
+        +--ro vc-oper-status?            pw-oper-state-type
+        +--ro vc-inbound-oper-status?    pw-oper-state-type
+        +--ro vc-outbound-oper-status?   pw-oper-state-type
+        +--ro statistics
+           +--ro vc-create-time?       yang:timestamp
+           +--ro vc-up-time?           yang:timeticks
+           +--ro discontinuity-time    yang:date-and-time
+           +--ro in-octets?            yang:counter64
+           +--ro in-pkts?              yang:counter64
+           +--ro in-errors?            yang:counter64
+           +--ro out-octets?           yang:counter64
+           +--ro out-pkts?             yang:counter64
+           +--ro out-errors?           yang:counter64
+    +--ro pseudowire
+       +--ro neighbor-ip-address?   inet:ip-address
+       +--ro vc-id?                 uint32
+    |  +--ro vc-list* []
+    |     +--ro vc-peer-address?   pw-oper-vc-peer-addr-ref
+    |     +--ro vc-id?             pw-oper-vc-id-ref
+       +--ro vc-list* []
+          +--ro vc-peer-address?   pw-oper-vc-peer-addr-ref
+          +--ro vc-id?             pw-oper-vc-id-ref
+module: cisco-self-mgmt
+     |  +--ro cisco-ia:parser-msg-ignore* [message]
+     |  |  +--ro cisco-ia:message    string
+     |  +--ro cisco-ia:full-sync-cli* [command]
+     |  |  +--ro cisco-ia:command    string
+     |  +--ro cisco-ia:nes-ttynum?                int16
+module: common-mpls-static
+     +--ro mpls-static-state
+        +--ro label-switched-paths
+           +--ro label-switched-path* [vrf-name prefix]
+              +--ro name?             string
+              +--ro vrf-name          string
+              +--ro in-label-value?   mpls:ietf-mpls-label
+              +--ro prefix            inet:ip-prefix
+              +--ro ingress-stats
+              |  +--ro stats
+              |     +--ro packets?           uint64
+              |     +--ro bytes?             uint64
+              |     +--ro dropped-packets?   uint64
+              |     +--ro dropped-bytes?     uint64
+              +--ro egress-stats
+              |  +--ro stats
+              |     +--ro packets?           uint64
+              |     +--ro bytes?             uint64
+              |     +--ro dropped-packets?   uint64
+              |     +--ro dropped-bytes?     uint64
+              +--ro path
+                 +--ro (resolution)?
+                    |  +--ro operations
+                    |  |  +--ro (operation)?
+                    |  |     |  +--ro preserve           empty
+                    |  |     |  +--ro swap
+                    |  |     |     +--ro stack
+                    |  |     |        +--ro label-stack*   ietf-mpls-label
+                    |  |     |  +--ro push
+                    |  |     |     +--ro stack
+                    |  |     |        +--ro label-stack*   ietf-mpls-label
+                    |  |        +--ro pop-and-forward    empty
+                    |  +--ro auto-protect?   boolean
+                       +--ro next-hop* [index]
+                          +--ro index            uint32
+                          +--ro type             hoptype
+                          +--ro protected-by?    uint32
+                          +--ro next-hop-type
+                          |  +--ro (address-type)?
+                          |  |  |  +--ro if-index        uint32
+                          |  |  |  +--ro ipv4-address    inet:ipv4-address-no-zone
+                          |  |  |  +--ro ipv6-address    inet:ipv6-address-no-zone
+                          |  |     +--ro mac-address     yang:mac-address
+                          |  +--ro out-interface-name?   if:interface-ref
+                          +--ro operations
+                          |  +--ro (operation)?
+                          |     |  +--ro preserve           empty
+                          |     |  +--ro swap
+                          |     |     +--ro stack
+                          |     |        +--ro label-stack*   ietf-mpls-label
+                          |     |  +--ro push
+                          |     |     +--ro stack
+                          |     |        +--ro label-stack*   ietf-mpls-label
+                          |        +--ro pop-and-forward    empty
+                          +--ro origin?          identityref
+                          +--ro nexthop-stats
+                             +--ro stats
+                                +--ro packets?           uint64
+                                +--ro bytes?             uint64
+                                +--ro dropped-packets?   uint64
+                                +--ro dropped-bytes?     uint64
+module: confd_dyncfg
+module: ietf-diffserv-classifier
+module: ietf-diffserv-policy
+module: ietf-diffserv-target
+    +--ro diffserv-target-entry* [direction policy-name]
+       +--ro direction                                identityref
+       +--ro policy-name                              string
+       +--ro diffserv-target-classifier-statistics* [classifier-entry-name parent-path]
+          +--ro classifier-entry-name          string
+          +--ro parent-path                    string
+          +--ro classifier-entry-statistics
+          |  +--ro classified-pkts?    uint64
+          |  +--ro classified-bytes?   uint64
+          |  +--ro classified-rate?    uint64
+          +--ro meter-statistics* [meter-id]
+          |  +--ro meter-id               uint16
+          |  +--ro meter-succeed-pkts?    uint64
+          |  +--ro meter-succeed-bytes?   uint64
+          |  +--ro meter-failed-pkts?     uint64
+          |  +--ro meter-failed-bytes?    uint64
+          +--ro queuing-statistics
+             +--ro output-pkts?        uint64
+             +--ro output-bytes?       uint64
+             +--ro queue-size-pkts?    uint64
+             +--ro queue-size-bytes?   uint64
+             +--ro drop-pkts?          uint64
+             +--ro drop-bytes?         uint64
+             +--ro wred-stats
+                +--ro early-drop-pkts?    uint64
+                +--ro early-drop-bytes?   uint64
+module: ietf-event-notifications
+  +--ro streams
+  |  +--ro stream*   stream
+  +--ro subscriptions
+     +--ro subscription* [subscription-id]
+        +--ro subscription-id                  subscription-id
+        +--ro configured-subscription?         empty {configured-subscriptions}?
+        +--ro subscription-status?             subscription-status
+        +--ro stream?                          stream
+        +--ro encoding?                        encoding
+        +--ro (filter-type)?
+        |  |  +--ro filter?                    <anyxml>
+        |  |  +--ro filter-ref?                filter-ref
+        |     +--ro (yp:update-filter)?
+        |        |  +--ro yp:subtree-filter?   <anyxml>
+        |           +--ro yp:xpath-filter?     yang:xpath1.0
+        +--ro startTime?                       yang:date-and-time
+        +--ro stopTime?                        yang:date-and-time
+        +--ro receivers
+        |  +--ro receiver* [address]
+        |     +--ro address     inet:host
+        |     +--ro port        inet:port-number
+        |     +--ro protocol?   transport-protocol
+        +--ro (push-source)?
+        |  |  +--ro source-interface?          if:interface-ref
+        |     +--ro source-vrf?                uint32
+        |     +--ro source-address             inet:ip-address-no-zone
+        +--ro (yp:update-trigger)?
+        |  |  +--ro yp:period                  yang:timeticks
+        |  |  +--ro yp:anchor-time?            yang:date-and-time
+        |     +--ro yp:no-synch-on-start?      empty
+        |     +--ro yp:dampening-period        yang:timeticks
+        |     +--ro yp:excluded-change*        change-type
+        +--ro yp:dscp?                         inet:dscp {notif-bis:configured-subscriptions}?
+        +--ro yp:subscription-priority?        uint8
+        +--ro yp:subscription-dependency?      string
+    |  +--ro output
+    |     +--ro subscription-result                    subscription-result
+    |     +--ro (result)?
+    |     |  |  +--ro subscription-id                  subscription-id
+    |     |     +--ro stream?                          stream
+    |     |     +--ro encoding?                        encoding
+    |     |     +--ro (filter-type)?
+    |     |     |  |  +--ro filter?                    <anyxml>
+    |     |     |  |  +--ro filter-ref?                filter-ref
+    |     |     |     +--ro (yp:update-filter)?
+    |     |     |        |  +--ro yp:subtree-filter?   <anyxml>
+    |     |     |           +--ro yp:xpath-filter?     yang:xpath1.0
+    |     |     +--ro startTime?                       yang:date-and-time
+    |     |     +--ro stopTime?                        yang:date-and-time
+    |     +--ro (yp:update-trigger)?
+    |     |  |  +--ro yp:period                        yang:timeticks
+    |     |  |  +--ro yp:anchor-time?                  yang:date-and-time
+    |     |     +--ro yp:no-synch-on-start?            empty
+    |     |     +--ro yp:dampening-period              yang:timeticks
+    |     |     +--ro yp:excluded-change*              change-type
+    |     +--ro yp:dscp?                               inet:dscp {notif-bis:configured-subscriptions}?
+    |     +--ro yp:subscription-priority?              uint8
+    |     +--ro yp:subscription-dependency?            string
+    |  +--ro output
+    |     +--ro subscription-result                    subscription-result
+    |     +--ro (result)?
+    |     |  |  +--ro subscription-id                  subscription-id
+    |     |     +--ro stream?                          stream
+    |     |     +--ro encoding?                        encoding
+    |     |     +--ro (filter-type)?
+    |     |     |  |  +--ro filter?                    <anyxml>
+    |     |     |  |  +--ro filter-ref?                filter-ref
+    |     |     |     +--ro (yp:update-filter)?
+    |     |     |        |  +--ro yp:subtree-filter?   <anyxml>
+    |     |     |           +--ro yp:xpath-filter?     yang:xpath1.0
+    |     |     +--ro startTime?                       yang:date-and-time
+    |     |     +--ro stopTime?                        yang:date-and-time
+    |     +--ro (yp:update-trigger)?
+    |     |  |  +--ro yp:period                        yang:timeticks
+    |     |  |  +--ro yp:anchor-time?                  yang:date-and-time
+    |     |     +--ro yp:no-synch-on-start?            empty
+    |     |     +--ro yp:dampening-period              yang:timeticks
+    |     |     +--ro yp:excluded-change*              change-type
+    |     +--ro yp:dscp?                               inet:dscp {notif-bis:configured-subscriptions}?
+    |     +--ro yp:subscription-priority?              uint8
+    |     +--ro yp:subscription-dependency?            string
+       +--ro output
+          +--ro subscription-result    subscription-result
+    |  +--ro subscription-id    subscription-id
+    |  +--ro subscription-id    subscription-id
+    |  +--ro subscription-id                  subscription-id
+    |  +--ro stream?                          stream
+    |  +--ro encoding?                        encoding
+    |  +--ro (filter-type)?
+    |  |  |  +--ro filter?                    <anyxml>
+    |  |  |  +--ro filter-ref?                filter-ref
+    |  |     +--ro (yp:update-filter)?
+    |  |        |  +--ro yp:subtree-filter?   <anyxml>
+    |  |           +--ro yp:xpath-filter?     yang:xpath1.0
+    |  +--ro startTime?                       yang:date-and-time
+    |  +--ro stopTime?                        yang:date-and-time
+    |  +--ro (yp:update-trigger)?
+    |  |  |  +--ro yp:period                  yang:timeticks
+    |  |  |  +--ro yp:anchor-time?            yang:date-and-time
+    |  |     +--ro yp:no-synch-on-start?      empty
+    |  |     +--ro yp:dampening-period        yang:timeticks
+    |  |     +--ro yp:excluded-change*        change-type
+    |  +--ro yp:dscp?                         inet:dscp {notif-bis:configured-subscriptions}?
+    |  +--ro yp:subscription-priority?        uint8
+    |  +--ro yp:subscription-dependency?      string
+    |  +--ro subscription-id    subscription-id
+    |  +--ro reason?            subscription-susp-reason
+    |  +--ro subscription-id    subscription-id
+    |  +--ro subscription-id                  subscription-id
+    |  +--ro stream?                          stream
+    |  +--ro encoding?                        encoding
+    |  +--ro (filter-type)?
+    |  |  |  +--ro filter?                    <anyxml>
+    |  |  |  +--ro filter-ref?                filter-ref
+    |  |     +--ro (yp:update-filter)?
+    |  |        |  +--ro yp:subtree-filter?   <anyxml>
+    |  |           +--ro yp:xpath-filter?     yang:xpath1.0
+    |  +--ro startTime?                       yang:date-and-time
+    |  +--ro stopTime?                        yang:date-and-time
+    |  +--ro (yp:update-trigger)?
+    |  |  |  +--ro yp:period                  yang:timeticks
+    |  |  |  +--ro yp:anchor-time?            yang:date-and-time
+    |  |     +--ro yp:no-synch-on-start?      empty
+    |  |     +--ro yp:dampening-period        yang:timeticks
+    |  |     +--ro yp:excluded-change*        change-type
+    |  +--ro yp:dscp?                         inet:dscp {notif-bis:configured-subscriptions}?
+    |  +--ro yp:subscription-priority?        uint8
+    |  +--ro yp:subscription-dependency?      string
+       +--ro subscription-id    subscription-id
+       +--ro reason?            subscription-term-reason
+module: ietf-interfaces-ext
+    +--ro in-pkts?    yang:counter64
+    +--ro out-pkts?   yang:counter64
+module: ietf-interfaces
+  +--ro interfaces-state
+     +--ro interface* [name]
+        +--ro name               string
+        +--ro type               identityref
+        +--ro admin-status       enumeration {if-mib}?
+        +--ro oper-status        enumeration
+        +--ro last-change?       yang:date-and-time
+        +--ro if-index           int32 {if-mib}?
+        +--ro phys-address?      yang:phys-address
+        +--ro higher-layer-if*   interface-state-ref
+        +--ro lower-layer-if*    interface-state-ref
+        +--ro speed?             yang:gauge64
+        +--ro statistics
+           +--ro discontinuity-time    yang:date-and-time
+           +--ro in-octets?            yang:counter64
+           +--ro in-unicast-pkts?      yang:counter64
+           +--ro in-broadcast-pkts?    yang:counter64
+           +--ro in-multicast-pkts?    yang:counter64
+           +--ro in-discards?          yang:counter32
+           +--ro in-errors?            yang:counter32
+           +--ro in-unknown-protos?    yang:counter32
+           +--ro out-octets?           yang:counter64
+           +--ro out-unicast-pkts?     yang:counter64
+           +--ro out-broadcast-pkts?   yang:counter64
+           +--ro out-multicast-pkts?   yang:counter64
+           +--ro out-discards?         yang:counter32
+           +--ro out-errors?           yang:counter32
+module: ietf-ipv6-unicast-routing
+module: ietf-ip
+    +--ro ipv4!
+    |  +--ro forwarding?   boolean
+    |  +--ro mtu?          uint16
+    |  +--ro address* [ip]
+    |  |  +--ro ip                     inet:ipv4-address-no-zone
+    |  |  +--ro (subnet)?
+    |  |  |  |  +--ro prefix-length?   uint8
+    |  |  |     +--ro netmask?         yang:dotted-quad {ipv4-non-contiguous-netmasks}?
+    |  |  +--ro origin?                ip-address-origin
+    |  +--ro neighbor* [ip]
+    |     +--ro ip                    inet:ipv4-address-no-zone
+    |     +--ro link-layer-address?   yang:phys-address
+    |     +--ro origin?               neighbor-origin
+    +--ro ipv6!
+       +--ro forwarding?   boolean
+       +--ro mtu?          uint32
+       +--ro address* [ip]
+       |  +--ro ip               inet:ipv6-address-no-zone
+       |  +--ro prefix-length    uint8
+       |  +--ro origin?          ip-address-origin
+       |  +--ro status?          enumeration
+       +--ro neighbor* [ip]
+          +--ro ip                    inet:ipv6-address-no-zone
+          +--ro link-layer-address?   yang:phys-address
+          +--ro origin?               neighbor-origin
+          +--ro is-router?            empty
+          +--ro state?                enumeration
+module: ietf-key-chain
+module: ietf-netconf-monitoring
+  +--ro netconf-state
+     +--ro capabilities
+     |  +--ro capability*   inet:uri
+     +--ro datastores
+     |  +--ro datastore* [name]
+     |     +--ro name                   netconf-datastore-type
+     |     +--ro locks!
+     |     |  +--ro (lock-type)?
+     |     |  |  |  +--ro global-lock
+     |     |  |  |     +--ro locked-by-session    uint32
+     |     |  |  |     +--ro locked-time          yang:date-and-time
+     |     |  |     +--ro partial-lock* [lock-id]
+     |     |  |        +--ro lock-id              uint32
+     |     |  |        +--ro locked-by-session    uint32
+     |     |  |        +--ro locked-time          yang:date-and-time
+     |     |  |        +--ro select*              yang:xpath1.0
+     |     |  |        +--ro locked-node*         instance-identifier
+     |     |  +--ro tncm:transaction-lock!
+     |     |     +--ro tncm:locked-by-session    uint32
+     |     +--ro tncm:transaction-id?   string
+     +--ro schemas
+     |  +--ro schema* [identifier version format]
+     |     +--ro identifier    string
+     |     +--ro version       string
+     |     +--ro format        identityref
+     |     +--ro namespace     inet:uri
+     |     +--ro location*     union
+     +--ro sessions
+     |  +--ro session* [session-id]
+     |     +--ro session-id           uint32
+     |     +--ro transport            identityref
+     |     +--ro username             string
+     |     +--ro source-host?         inet:host
+     |     +--ro login-time           yang:date-and-time
+     |     +--ro in-rpcs?             yang:zero-based-counter32
+     |     +--ro in-bad-rpcs?         yang:zero-based-counter32
+     |     +--ro out-rpc-errors?      yang:zero-based-counter32
+     |     +--ro out-notifications?   yang:zero-based-counter32
+     +--ro statistics
+     |  +--ro netconf-start-time?   yang:date-and-time
+     |  +--ro in-bad-hellos?        yang:zero-based-counter32
+     |  +--ro in-sessions?          yang:zero-based-counter32
+     |  +--ro dropped-sessions?     yang:zero-based-counter32
+     |  +--ro in-rpcs?              yang:zero-based-counter32
+     |  +--ro in-bad-rpcs?          yang:zero-based-counter32
+     |  +--ro out-rpc-errors?       yang:zero-based-counter32
+     |  +--ro out-notifications?    yang:zero-based-counter32
+     +--ro tncm:files
+     |  +--ro tncm:file* [name]
+     |     +--ro tncm:name       string
+     |     +--ro tncm:creator?   string
+     |     +--ro tncm:created?   yang:date-and-time
+     |     +--ro tncm:context?   union
+     +--ro tncm:streams
+        +--ro tncm:stream* [name]
+           +--ro tncm:name                        string
+           +--ro tncm:description                 string
+           +--ro tncm:replay-support              boolean
+           +--ro tncm:replay-log-creation-time    yang:date-and-time
+           +--ro tncm:replay-log-aged-time?       yang:date-and-time
+           +--ro tncm:subscriber* [session-id]
+              +--ro tncm:session-id    uint32
+              +--ro tncm:start-time    yang:date-and-time
+              +--ro tncm:stop-time?    yang:date-and-time
+       +--ro output
+          +--ro data?   <anyxml>
+module: ietf-netconf-notifications
+    |  +--ro changed-by
+    |  |  +--ro (server-or-user)
+    |  |     |  +--ro server?        empty
+    |  |        +--ro username       string
+    |  |        +--ro session-id     nc:session-id-or-zero-type
+    |  |        +--ro source-host?   inet:ip-address
+    |  +--ro datastore?    enumeration
+    |  +--ro edit* []
+    |     +--ro target?      instance-identifier
+    |     +--ro operation?   nc:edit-operation-type
+    |  +--ro changed-by
+    |  |  +--ro (server-or-user)
+    |  |     |  +--ro server?        empty
+    |  |        +--ro username       string
+    |  |        +--ro session-id     nc:session-id-or-zero-type
+    |  |        +--ro source-host?   inet:ip-address
+    |  +--ro added-capability*      inet:uri
+    |  +--ro deleted-capability*    inet:uri
+    |  +--ro modified-capability*   inet:uri
+    |  +--ro username       string
+    |  +--ro session-id     nc:session-id-or-zero-type
+    |  +--ro source-host?   inet:ip-address
+    |  +--ro username              string
+    |  +--ro session-id            nc:session-id-or-zero-type
+    |  +--ro source-host?          inet:ip-address
+    |  +--ro killed-by?            nc:session-id-type
+    |  +--ro termination-reason    enumeration
+       +--ro username         string
+       +--ro session-id       nc:session-id-or-zero-type
+       +--ro source-host?     inet:ip-address
+       +--ro confirm-event    enumeration
+       +--ro timeout?         uint32
+module: ietf-netconf
+    |  +--ro output
+    |     +--ro data?   <anyxml>
+    |  +--ro output
+    |     +--ro data?   <anyxml>
+module: ietf-restconf-monitoring
+  +--ro restconf-state
+     +--ro capabilities
+     |  +--ro capability*   inet:uri
+     +--ro streams
+        +--ro stream* [name]
+           +--ro name                        string
+           +--ro description?                string
+           +--ro replay-support?             boolean
+           +--ro replay-log-creation-time?   yang:date-and-time
+           +--ro access* [encoding]
+              +--ro encoding    string
+              +--ro location    inet:uri
+module: ietf-routing
+  +--ro routing-state
+  |  +--ro routing-instance* [name]
+  |     +--ro name                 string
+  |     +--ro type?                identityref
+  |     +--ro router-id?           yang:dotted-quad
+  |     +--ro interfaces
+  |     |  +--ro interface*   if:interface-state-ref
+  |     +--ro routing-protocols
+  |     |  +--ro routing-protocol* [type name]
+  |     |     +--ro type    identityref
+  |     |     +--ro name    string
+  |     +--ro ribs
+  |        +--ro rib* [name]
+  |           +--ro name              string
+  |           +--ro address-family    identityref
+  |           +--ro default-rib?      boolean {multiple-ribs}?
+  |           +--ro routes
+  |              +--ro route* [destination-prefix]
+  |                 +--ro route-preference?     route-preference
+  |                 +--ro destination-prefix    string
+  |                 +--ro metric?               uint32
+  |                 +--ro next-hop
+  |                 |  +--ro (next-hop-options)
+  |                 |     |  +--ro outgoing-interface?   string
+  |                 |     |  +--ro next-hop-address?     string
+  |                 |        +--ro special-next-hop?     enumeration
+  |                 +--ro source-protocol       identityref
+  |                 +--ro active?               empty
+  |                 +--ro last-updated?         yang:date-and-time
+  |                 +--ro update-source?        string
+    +--ro routing-instance?   string
+       +--ro output
+          +--ro route
+             +--ro address-family     identityref
+             +--ro next-hop
+             |  +--ro (next-hop-options)
+             |     |  +--ro outgoing-interface?   string
+             |     |  +--ro next-hop-address?     string
+             |        +--ro special-next-hop?     enumeration
+             +--ro source-protocol    identityref
+             +--ro active?            empty
+             +--ro last-updated?      yang:date-and-time
+module: ietf-yang-library
+  +--ro modules-state
+     +--ro module-set-id    string
+     +--ro module* [name revision]
+        +--ro name                yang:yang-identifier
+        +--ro revision            union
+        +--ro schema?             inet:uri
+        +--ro namespace           inet:uri
+        +--ro feature*            yang:yang-identifier
+        +--ro deviation* [name revision]
+        |  +--ro name        yang:yang-identifier
+        |  +--ro revision    union
+        +--ro conformance-type    enumeration
+        +--ro submodule* [name revision]
+           +--ro name        yang:yang-identifier
+           +--ro revision    union
+           +--ro schema?     inet:uri
+       +--ro module-set-id    -> /modules-state/module-set-id
+module: ietf-yang-push
+    |  +--ro subscription-id              notif-bis:subscription-id
+    |  +--ro time-of-update?              yang:date-and-time
+    |  +--ro updates-not-sent?            empty
+    |  +--ro datastore-contents-string?   string
+       +--ro subscription-id             notif-bis:subscription-id
+       +--ro time-of-update?             yang:date-and-time
+       +--ro updates-not-sent?           empty
+       +--ro datastore-changes-string?   string
+module: nvo
+module: oc-mapping-acl
+           |  +--ro state
+           |     +--ro interface?      -> /oc-if:interfaces/interface/name
+           |     +--ro subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+           |     +--ro state
+           |     |  +--ro set-name?   string
+           |     +--ro acl-entries
+           |        +--ro acl-entry* [sequence-id]
+           |           +--ro sequence-id    string
+                 +--ro acl-entries
+                    +--ro acl-entry* [sequence-id]
+                       +--ro sequence-id    string
+module: openconfig-acl
+     +--ro state
+     |  +--ro counter-capability?   identityref
+     |     +--ro state
+     |     |  +--ro acl-type    inet:ip-version
+     |     |  +--ro name?       string
+     |           +--ro state
+     |           |  +--ro sequence-id?       uint32
+     |           |  +--ro matched-packets?   yang:counter64
+     |           |  +--ro matched-octets?    yang:counter64
+     |           |  +--ro state
+     |           |     +--ro ip-version?                  inet:ip-version
+     |           |     +--ro source-ip-address?           inet:ip-prefix
+     |           |     +--ro source-ip-flow-label?        inet:ipv6-flow-label
+     |           |     +--ro destination-ip-address?      inet:ip-prefix
+     |           |     +--ro destination-ip-flow-label?   inet:ipv6-flow-label
+     |           |     +--ro dscp?                        inet:dscp
+     |           |     +--ro protocol?                    oc-pkt-match-types:ip-protocol-type
+     |           |     +--ro hop-limit?                   uint8
+     |           |  +--ro state
+     |           |     +--ro source-port?        oc-pkt-match-types:port-num-range
+     |           |     +--ro destination-port?   oc-pkt-match-types:port-num-range
+     |           |     +--ro tcp-flags*          identityref
+     |           |  +--ro state
+     |           |     +--ro state
+     |           |        +--ro interface?      -> /oc-if:interfaces/interface/name
+     |           |        +--ro subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+     |              +--ro state
+     |                 +--ro forwarding-action    identityref
+           +--ro state
+           |  +--ro id?   oc-if:interface-id
+           |  +--ro state
+           |     +--ro interface?      -> /oc-if:interfaces/interface/name
+           |     +--ro subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+           |     +--ro state
+           |     |  +--ro set-name?   -> /acl/acl-sets/acl-set/config/name
+           |     +--ro acl-entries
+           |        +--ro acl-entry* [sequence-id]
+           |           +--ro sequence-id    -> ../state/sequence-id
+           |           +--ro state
+           |              +--ro sequence-id?       -> /acl/acl-sets/acl-set[name=current()/../../../../set-name]/acl-entries/acl-entry/sequence-id
+           |              +--ro matched-packets?   yang:counter64
+           |              +--ro matched-octets?    yang:counter64
+                 +--ro state
+                 |  +--ro set-name?   -> /acl/acl-sets/acl-set/config/name
+                 +--ro acl-entries
+                    +--ro acl-entry* [sequence-id]
+                       +--ro sequence-id    -> ../state/sequence-id
+                       +--ro state
+                          +--ro sequence-id?       -> /acl/acl-sets/acl-set[name=current()/../../../../set-name]/acl-entries/acl-entry/sequence-id
+                          +--ro matched-packets?   yang:counter64
+                          +--ro matched-octets?    yang:counter64
+module: openconfig-interfaces
+        +--ro state
+        |  +--ro type                         identityref
+        |  +--ro mtu?                         uint16
+        |  +--ro name?                        string
+        |  +--ro description?                 string
+        |  +--ro enabled?                     boolean
+        |  +--ro ifindex?                     uint32
+        |  +--ro admin-status                 enumeration
+        |  +--ro oper-status                  enumeration
+        |  +--ro last-change?                 yang:date-and-time
+        |  +--ro counters
+        |  |  +--ro in-octets?            yang:counter64
+        |  |  +--ro in-unicast-pkts?      yang:counter64
+        |  |  +--ro in-broadcast-pkts?    yang:counter64
+        |  |  +--ro in-multicast-pkts?    yang:counter64
+        |  |  +--ro in-discards?          yang:counter64
+        |  |  +--ro in-errors?            yang:counter64
+        |  |  +--ro in-unknown-protos?    yang:counter32
+        |  |  +--ro out-octets?           yang:counter64
+        |  |  +--ro out-unicast-pkts?     yang:counter64
+        |  |  +--ro out-broadcast-pkts?   yang:counter64
+        |  |  +--ro out-multicast-pkts?   yang:counter64
+        |  |  +--ro out-discards?         yang:counter64
+        |  |  +--ro out-errors?           yang:counter64
+        |  |  +--ro last-clear?           yang:date-and-time
+        |  +--ro oc-platform:hardware-port?   -> /components/component/name
+        |  +--ro state
+        |     +--ro up?                                     uint32
+        |     +--ro down?                                   uint32
+        |     +--ro oc-if-cisco:dampening-time?             uint32
+        |     +--ro oc-if-cisco:maximum-suppressing-time?   uint32
+        |     +--ro state
+        |     |  +--ro index?          uint32
+        |     |  +--ro name?           string
+        |     |  +--ro description?    string
+        |     |  +--ro enabled?        boolean
+        |     |  +--ro ifindex?        uint32
+        |     |  +--ro admin-status    enumeration
+        |     |  +--ro oper-status     enumeration
+        |     |  +--ro last-change?    yang:date-and-time
+        |     |  +--ro counters
+        |     |     +--ro in-octets?            yang:counter64
+        |     |     +--ro in-unicast-pkts?      yang:counter64
+        |     |     +--ro in-broadcast-pkts?    yang:counter64
+        |     |     +--ro in-multicast-pkts?    yang:counter64
+        |     |     +--ro in-discards?          yang:counter64
+        |     |     +--ro in-errors?            yang:counter64
+        |     |     +--ro in-unknown-protos?    yang:counter32
+        |     |     +--ro out-octets?           yang:counter64
+        |     |     +--ro out-unicast-pkts?     yang:counter64
+        |     |     +--ro out-broadcast-pkts?   yang:counter64
+        |     |     +--ro out-multicast-pkts?   yang:counter64
+        |     |     +--ro out-discards?         yang:counter64
+        |     |     +--ro out-errors?           yang:counter64
+        |     |     +--ro last-clear?           yang:date-and-time
+        |     |  |     +--ro oc-ip:state
+        |     |  |     |  +--ro oc-ip:ip?              inet:ipv4-address-no-zone
+        |     |  |     |  +--ro oc-ip:prefix-length?   uint8
+        |     |  |     |  +--ro oc-ip:origin?          ip-address-origin
+        |     |  |           +--ro oc-ip:state
+        |     |  |           |  +--ro oc-ip:virtual-router-id?        uint8
+        |     |  |           |  +--ro oc-ip:virtual-address*          inet:ip-address
+        |     |  |           |  +--ro oc-ip:priority?                 uint8
+        |     |  |           |  +--ro oc-ip:preempt?                  boolean
+        |     |  |           |  +--ro oc-ip:preempt-delay?            uint16
+        |     |  |           |  +--ro oc-ip:accept-mode?              boolean
+        |     |  |           |  +--ro oc-ip:advertisement-interval?   uint16
+        |     |  |           |  +--ro oc-ip:current-priority?         uint8
+        |     |  |              +--ro oc-ip:state
+        |     |  |                 +--ro oc-ip:track-interface?      -> /oc-if:interfaces/interface/name
+        |     |  |                 +--ro oc-ip:priority-decrement?   uint8
+        |     |  |     +--ro oc-ip:state
+        |     |  |        +--ro oc-ip:ip?                   inet:ipv4-address-no-zone
+        |     |  |        +--ro oc-ip:link-layer-address    yang:phys-address
+        |     |  |        +--ro oc-ip:origin?               neighbor-origin
+        |     |  |  +--ro oc-ip:state
+        |     |  |  |  +--ro oc-ip:enabled?   boolean
+        |     |  |     +--ro oc-ip:state
+        |     |  |        +--ro oc-ip:interface?      -> /oc-if:interfaces/interface/name
+        |     |  |        +--ro oc-ip:subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+        |     |  +--ro oc-ip:state
+        |     |     +--ro oc-ip:enabled?   boolean
+        |     |     +--ro oc-ip:mtu?       uint16
+        |        |     +--ro oc-ip:state
+        |        |     |  +--ro oc-ip:ip?              inet:ipv6-address-no-zone
+        |        |     |  +--ro oc-ip:prefix-length    uint8
+        |        |     |  +--ro oc-ip:origin?          ip-address-origin
+        |        |     |  +--ro oc-ip:status?          enumeration
+        |        |           +--ro oc-ip:state
+        |        |           |  +--ro oc-ip:virtual-router-id?        uint8
+        |        |           |  +--ro oc-ip:virtual-address*          inet:ip-address
+        |        |           |  +--ro oc-ip:priority?                 uint8
+        |        |           |  +--ro oc-ip:preempt?                  boolean
+        |        |           |  +--ro oc-ip:preempt-delay?            uint16
+        |        |           |  +--ro oc-ip:accept-mode?              boolean
+        |        |           |  +--ro oc-ip:advertisement-interval?   uint16
+        |        |           |  +--ro oc-ip:current-priority?         uint8
+        |        |           |  +--ro oc-ip:virtual-link-local?       inet:ip-address
+        |        |              +--ro oc-ip:state
+        |        |                 +--ro oc-ip:track-interface?      -> /oc-if:interfaces/interface/name
+        |        |                 +--ro oc-ip:priority-decrement?   uint8
+        |        |     +--ro oc-ip:state
+        |        |        +--ro oc-ip:ip?                   inet:ipv6-address-no-zone
+        |        |        +--ro oc-ip:link-layer-address    yang:phys-address
+        |        |        +--ro oc-ip:origin?               neighbor-origin
+        |        |        +--ro oc-ip:is-router?            empty
+        |        |        +--ro oc-ip:neighbor-state?       enumeration
+        |        |  +--ro oc-ip:state
+        |        |  |  +--ro oc-ip:enabled?   boolean
+        |        |     +--ro oc-ip:state
+        |        |        +--ro oc-ip:interface?      -> /oc-if:interfaces/interface/name
+        |        |        +--ro oc-ip:subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+        |        +--ro oc-ip:state
+        |        |  +--ro oc-ip:enabled?                     boolean
+        |        |  +--ro oc-ip:mtu?                         uint32
+        |        |  +--ro oc-ip:dup-addr-detect-transmits?   uint32
+        |           +--ro oc-ip-ext:state
+        |              +--ro oc-ip-ext:create-global-addresses?        boolean
+        |              +--ro oc-ip-ext:create-temporary-addresses?     boolean
+        |              +--ro oc-ip-ext:temporary-valid-lifetime?       uint32
+        |              +--ro oc-ip-ext:temporary-preferred-lifetime?   uint32
+        |     +--ro oc-vlan:state
+        |        +--ro oc-vlan:interface-mode?   oc-vlan-types:vlan-mode-type
+        |        +--ro oc-vlan:native-vlan?      union
+        |        +--ro oc-vlan:access-vlan?      union
+        |        +--ro oc-vlan:trunk-vlans*      union
+           +--ro oc-vlan:state
+           |  +--ro oc-vlan:vlan?   union
+           |  |     +--ro oc-ip:state
+           |  |        +--ro oc-ip:ip?              inet:ipv4-address-no-zone
+           |  |        +--ro oc-ip:prefix-length?   uint8
+           |  |        +--ro oc-ip:origin?          ip-address-origin
+           |  |     +--ro oc-ip:state
+           |  |        +--ro oc-ip:ip?                   inet:ipv4-address-no-zone
+           |  |        +--ro oc-ip:link-layer-address    yang:phys-address
+           |  |        +--ro oc-ip:origin?               neighbor-origin
+           |  |  +--ro oc-ip:state
+           |  |  |  +--ro oc-ip:enabled?   boolean
+           |  |     +--ro oc-ip:state
+           |  |        +--ro oc-ip:interface?      -> /oc-if:interfaces/interface/name
+           |  |        +--ro oc-ip:subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+           |  +--ro oc-ip:state
+           |     +--ro oc-ip:enabled?   boolean
+           |     +--ro oc-ip:mtu?       uint16
+              |     +--ro oc-ip:state
+              |        +--ro oc-ip:ip?              inet:ipv6-address-no-zone
+              |        +--ro oc-ip:prefix-length    uint8
+              |        +--ro oc-ip:origin?          ip-address-origin
+              |        +--ro oc-ip:status?          enumeration
+              |     +--ro oc-ip:state
+              |        +--ro oc-ip:ip?                   inet:ipv6-address-no-zone
+              |        +--ro oc-ip:link-layer-address    yang:phys-address
+              |        +--ro oc-ip:origin?               neighbor-origin
+              |        +--ro oc-ip:is-router?            empty
+              |        +--ro oc-ip:neighbor-state?       enumeration
+              |  +--ro oc-ip:state
+              |  |  +--ro oc-ip:enabled?   boolean
+              |     +--ro oc-ip:state
+              |        +--ro oc-ip:interface?      -> /oc-if:interfaces/interface/name
+              |        +--ro oc-ip:subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+              +--ro oc-ip:state
+                 +--ro oc-ip:enabled?                     boolean
+                 +--ro oc-ip:mtu?                         uint32
+                 +--ro oc-ip:dup-addr-detect-transmits?   uint32
+module: openconfig-lacp
+     +--ro state
+     |  +--ro system-priority?   uint16
+           +--ro state
+           |  +--ro name?              oc-if:base-interface-ref
+           |  +--ro interval?          lacp-period-type
+           |  +--ro lacp-mode?         lacp-activity-type
+           |  +--ro system-id-mac?     yang:mac-address
+           |  +--ro system-priority?   uint16
+           +--ro members
+              +--ro member* [interface]
+                 +--ro interface    -> ../state/interface
+                 +--ro state
+                    +--ro interface?         oc-if:base-interface-ref
+                    +--ro activity?          lacp-activity-type
+                    +--ro timeout?           lacp-timeout-type
+                    +--ro synchronization?   lacp-synchronization-type
+                    +--ro aggregatable?      boolean
+                    +--ro collecting?        boolean
+                    +--ro distributing?      boolean
+                    +--ro system-id?         yang:mac-address
+                    +--ro oper-key?          uint16
+                    +--ro partner-id?        yang:mac-address
+                    +--ro partner-key?       uint16
+                    +--ro counters
+                       +--ro lacp-in-pkts?          yang:counter64
+                       +--ro lacp-out-pkts?         yang:counter64
+                       +--ro lacp-rx-errors?        yang:counter64
+                       +--ro lacp-tx-errors?        yang:counter64
+                       +--ro lacp-unknown-errors?   yang:counter64
+                       +--ro lacp-errors?           yang:counter64
+module: openconfig-lldp
+     +--ro state
+     |  +--ro enabled?                      boolean
+     |  +--ro hello-timer?                  uint64
+     |  +--ro suppress-tlv-advertisement*   identityref
+     |  +--ro system-name?                  string
+     |  +--ro system-description?           string
+     |  +--ro chassis-id?                   string
+     |  +--ro chassis-id-type?              oc-lldp-types:chassis-id-type
+     |  +--ro counters
+     |     +--ro frame-in?           yang:counter64
+     |     +--ro frame-out?          yang:counter64
+     |     +--ro frame-error-in?     yang:counter64
+     |     +--ro frame-discard?      yang:counter64
+     |     +--ro tlv-discard?        yang:counter64
+     |     +--ro tlv-unknown?        yang:counter64
+     |     +--ro last-clear?         yang:date-and-time
+     |     +--ro tlv-accepted?       yang:counter64
+     |     +--ro entries-aged-out?   yang:counter64
+           +--ro state
+           |  +--ro name?       oc-if:base-interface-ref
+           |  +--ro enabled?    boolean
+           |  +--ro counters
+           |     +--ro frame-in?          yang:counter64
+           |     +--ro frame-out?         yang:counter64
+           |     +--ro frame-error-in?    yang:counter64
+           |     +--ro frame-discard?     yang:counter64
+           |     +--ro tlv-discard?       yang:counter64
+           |     +--ro tlv-unknown?       yang:counter64
+           |     +--ro last-clear?        yang:date-and-time
+           |     +--ro frame-error-out?   yang:counter64
+           +--ro neighbors
+              +--ro neighbor* [id]
+                 +--ro id              -> ../state/id
+                 +--ro config
+                 +--ro state
+                 |  +--ro system-name?               string
+                 |  +--ro system-description?        string
+                 |  +--ro chassis-id?                string
+                 |  +--ro chassis-id-type?           oc-lldp-types:chassis-id-type
+                 |  +--ro id?                        string
+                 |  +--ro age?                       uint64
+                 |  +--ro last-update?               int64
+                 |  +--ro port-id?                   string
+                 |  +--ro port-id-type?              oc-lldp-types:port-id-type
+                 |  +--ro port-description?          string
+                 |  +--ro management-address?        string
+                 |  +--ro management-address-type?   string
+                 +--ro custom-tlvs
+                 |  +--ro tlv* [type oui oui-subtype]
+                 |     +--ro type           -> ../state/type
+                 |     +--ro oui            -> ../state/oui
+                 |     +--ro oui-subtype    -> ../state/oui-subtype
+                 |     +--ro config
+                 |     +--ro state
+                 |        +--ro type?          int32
+                 |        +--ro oui?           string
+                 |        +--ro oui-subtype?   string
+                 |        +--ro value?         binary
+                 +--ro capabilities
+                    +--ro capability* [name]
+                       +--ro name      -> ../state/name
+                       +--ro config
+                       +--ro state
+                          +--ro name?      identityref
+                          +--ro enabled?   boolean
+module: openconfig-local-routing
+     +--ro state
+     |     +--ro state
+     |     |  +--ro prefix?    inet:ip-prefix
+     |     |  +--ro set-tag?   oc-pt:tag-type
+     |           +--ro state
+     |           |  +--ro index?      string
+     |           |  +--ro next-hop?   union
+     |           |  +--ro metric?     uint32
+     |           |  +--ro recurse?    boolean
+     |              +--ro state
+     |                 +--ro interface?      -> /oc-if:interfaces/interface/name
+     |                 +--ro subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+           +--ro state
+              +--ro prefix?    inet:ip-prefix
+              +--ro discard?   boolean
+              +--ro set-tag?   oc-pt:tag-type
+module: openconfig-network-instance
+        +--ro state
+        |  +--ro name?                       string
+        |  +--ro type?                       identityref
+        |  +--ro enabled?                    boolean
+        |  +--ro description?                string
+        |  +--ro router-id?                  yang:dotted-quad
+        |  +--ro route-distinguisher?        oc-ni-types:route-distinguisher
+        |  +--ro enabled-address-families*   identityref
+        |  +--ro mtu?                        uint16
+        |     +--ro state
+        |        +--ro id?                            string
+        |        +--ro interface?                     -> /oc-if:interfaces/interface/name
+        |        +--ro subinterface?                  -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+        |        +--ro associated-address-families*   identityref
+        |     +--ro state
+        |        +--ro protocol?         -> ../../../../protocols/protocol/config/identifier
+        |        +--ro address-family?   identityref
+              +--ro state
+              |  +--ro identifier?       identityref
+              |  +--ro name?             string
+              |  +--ro enabled?          boolean
+              |  +--ro default-metric?   uint32
+              |     +--ro state
+              |     |  +--ro prefix?    inet:ip-prefix
+              |     |  +--ro set-tag?   oc-pt:tag-type
+              |           +--ro state
+              |           |  +--ro index?      string
+              |           |  +--ro next-hop?   union
+              |           |  +--ro metric?     uint32
+              |           |  +--ro recurse?    boolean
+              |              +--ro state
+              |                 +--ro interface?      -> /oc-if:interfaces/interface/name
+              |                 +--ro subinterface?   -> /oc-if:interfaces/interface[oc-if:name=current()/../interface]/subinterfaces/subinterface/index
+                    +--ro state
+                       +--ro prefix?    inet:ip-prefix
+                       +--ro discard?   boolean
+                       +--ro set-tag?   oc-pt:tag-type
+module: openconfig-optical-amplifier
+     |  +--ro state
+     |     +--ro name?               string
+     |     +--ro type?               identityref
+     |     +--ro target-gain?        decimal64
+     |     +--ro target-gain-tilt?   decimal64
+     |     +--ro gain-range?         identityref
+     |     +--ro amp-mode?           identityref
+     |     +--ro output-power?       decimal64
+     |     +--ro actual-gain?        decimal64
+     |     +--ro actual-gain-tilt?   decimal64
+     |     +--ro input-power?        decimal64
+        +--ro state
+           +--ro interface*   oc-if:base-interface-ref
+module: openconfig-platform
+        +--ro name                          string
+        +--ro state
+        |  +--ro name?          string
+        |  +--ro type?          union
+        |  +--ro id?            string
+        |  +--ro description?   string
+        |  +--ro mfg-name?      string
+        |  +--ro version?       string
+        |  +--ro serial-no?     string
+        |  +--ro part-no?       string
+        +--ro properties
+        |  +--ro property* [name]
+        |     +--ro name     string
+        |     +--ro state
+        |        +--ro name?           string
+        |        +--ro value?          union
+        |        +--ro configurable?   boolean
+        +--ro subcomponents
+        |  +--ro subcomponent* [name]
+        |     +--ro name     string
+        |     +--ro state
+        |        +--ro name?   string
+        |  +--ro oc-transceiver:state
+        |  |  +--ro oc-transceiver:enabled?                     boolean
+        |  |  +--ro oc-transceiver:form-factor?                 identityref
+        |  |  +--ro oc-transceiver:present?                     enumeration
+        |  |  +--ro oc-transceiver:connector-type?              identityref
+        |  |  +--ro oc-transceiver:internal-temp?               int16
+        |  |  +--ro oc-transceiver:vendor?                      string
+        |  |  +--ro oc-transceiver:vendor-part?                 string
+        |  |  +--ro oc-transceiver:vendor-rev?                  string
+        |  |  +--ro oc-transceiver:ethernet-compliance-code?    identityref
+        |  |  +--ro oc-transceiver:sonet-sdh-compliance-code?   identityref
+        |  |  +--ro oc-transceiver:otn-compliance-code?         identityref
+        |  |  +--ro oc-transceiver:serial-no?                   string
+        |  |  +--ro oc-transceiver:date-code?                   yang:date-and-time
+        |  |  +--ro oc-transceiver:fault-condition?             boolean
+        |        +--ro oc-transceiver:state
+        |           +--ro oc-transceiver:index?                 uint16
+        |           +--ro oc-transceiver:description?           string
+        |           +--ro oc-transceiver:tx-laser?              boolean
+        |           +--ro oc-transceiver:target-output-power?   decimal64
+        |           +--ro oc-transceiver:output-frequency?      oc-opt-types:frequency-type
+        |           +--ro oc-transceiver:output-power
+        |           |  +--ro oc-transceiver:instant?   decimal64
+        |           |  +--ro oc-transceiver:avg?       decimal64
+        |           |  +--ro oc-transceiver:min?       decimal64
+        |           |  +--ro oc-transceiver:max?       decimal64
+        |           +--ro oc-transceiver:input-power
+        |           |  +--ro oc-transceiver:instant?   decimal64
+        |           |  +--ro oc-transceiver:avg?       decimal64
+        |           |  +--ro oc-transceiver:min?       decimal64
+        |           |  +--ro oc-transceiver:max?       decimal64
+        |           +--ro oc-transceiver:laser-bias-current
+        |              +--ro oc-transceiver:instant?   decimal64
+        |              +--ro oc-transceiver:avg?       decimal64
+        |              +--ro oc-transceiver:min?       decimal64
+        |              +--ro oc-transceiver:max?       decimal64
+           +--ro oc-line-com:state
+              +--ro oc-line-com:optical-port-type?   identityref
+module: openconfig-routing-policy
+     |  |     +--ro state
+     |  |     |  +--ro prefix-set-name?   string
+     |  |           +--ro state
+     |  |              +--ro ip-prefix           inet:ip-prefix
+     |  |              +--ro masklength-range?   string
+     |        +--ro state
+     |           +--ro neighbor-set-name?   string
+     |           +--ro address*             inet:ip-address-no-zone
+           +--ro state
+           |  +--ro name?   string
+                 +--ro state
+                 |  +--ro name?   string
+                 |  |  +--ro state
+                 |  |     +--ro prefix-set?          -> /routing-policy/defined-sets/prefix-sets/prefix-set/prefix-set-name
+                 |  |     +--ro match-set-options?   oc-pol-types:match-set-options-restricted-type
+                 |  |  +--ro state
+                 |  |     +--ro tag-set?             string
+                 |  |     +--ro match-set-options?   oc-pol-types:match-set-options-restricted-type
+                    +--ro state
+                    |  +--ro (route-disposition)?
+                    |     |  +--ro accept-route?   empty
+                    |        +--ro reject-route?   empty
+                       +--ro state
+                          +--ro set-tag?   oc-pol-types:tag-type
+module: openconfig-terminal-device
+     +--ro state
+     |     +--ro state
+     |     |  +--ro index?                  uint32
+     |     |  +--ro description?            string
+     |     |  +--ro admin-state?            oc-opt-types:admin-state-type
+     |     |  +--ro rate-class?             identityref
+     |     |  +--ro trib-protocol?          identityref
+     |     |  +--ro logical-channel-type?   identityref
+     |     |  +--ro loopback-mode?          oc-opt-types:loopback-mode-type
+     |     |  +--ro link-state?             enumeration
+     |     |  +--ro state
+     |     |     +--ro tti-msg-transmit?           string
+     |     |     +--ro tti-msg-expected?           string
+     |     |     +--ro tti-msg-auto?               boolean
+     |     |     +--ro tti-msg-recv?               string
+     |     |     +--ro rdi-msg?                    string
+     |     |     +--ro errored-seconds?            yang:counter64
+     |     |     +--ro severely-errored-seconds?   yang:counter64
+     |     |     +--ro unavailable-seconds?        yang:counter64
+     |     |     +--ro code-violations?            yang:counter64
+     |     |     +--ro fec-uncorrectable-words?    yang:counter64
+     |     |     +--ro fec-corrected-bytes?        yang:counter64
+     |     |     +--ro fec-corrected-bits?         yang:counter64
+     |     |     +--ro background-block-errors?    yang:counter64
+     |     |     +--ro pre-fec-ber
+     |     |     |  +--ro instant?   decimal64
+     |     |     |  +--ro avg?       decimal64
+     |     |     |  +--ro min?       decimal64
+     |     |     |  +--ro max?       decimal64
+     |     |     +--ro post-fec-ber
+     |     |     |  +--ro instant?   decimal64
+     |     |     |  +--ro avg?       decimal64
+     |     |     |  +--ro min?       decimal64
+     |     |     |  +--ro max?       decimal64
+     |     |     +--ro q-value
+     |     |     |  +--ro instant?   decimal64
+     |     |     |  +--ro avg?       decimal64
+     |     |     |  +--ro min?       decimal64
+     |     |     |  +--ro max?       decimal64
+     |     |     +--ro esnr
+     |     |        +--ro instant?   decimal64
+     |     |        +--ro avg?       decimal64
+     |     |        +--ro min?       decimal64
+     |     |        +--ro max?       decimal64
+     |     |  +--ro state
+     |     |     +--ro in-mac-control-frames?    yang:counter64
+     |     |     +--ro in-mac-pause-frames?      yang:counter64
+     |     |     +--ro in-oversize-frames?       yang:counter64
+     |     |     +--ro in-jabber-frames?         yang:counter64
+     |     |     +--ro in-fragment-frames?       yang:counter64
+     |     |     +--ro in-8021q-frames?          yang:counter64
+     |     |     +--ro in-crc-errors?            yang:counter64
+     |     |     +--ro out-mac-control-frames?   yang:counter64
+     |     |     +--ro out-mac-pause-frames?     yang:counter64
+     |     |     +--ro out-8021q-frames?         yang:counter64
+     |     |  +--ro state
+     |     |     +--ro transceiver?        -> /oc-platform:components/component/name
+     |     |     +--ro physical-channel*   -> /oc-platform:components/component/oc-transceiver:transceiver/physical-channels/channel/index
+     |           +--ro state
+     |              +--ro index?             uint32
+     |              +--ro description?       string
+     |              +--ro assignment-type?   enumeration
+     |              +--ro logical-channel?   -> /terminal-device/logical-channels/channel/index
+     |              +--ro optical-channel?   -> /oc-platform:components/component/name
+     |              +--ro allocation?        decimal64
+        +--ro mode* [mode-id]
+           +--ro mode-id    -> ../state/mode-id
+           +--ro config
+           +--ro state
+              +--ro mode-id?       uint16
+              +--ro description?   string
+              +--ro vendor-id?     string
+module: openconfig-vlan
+        +--ro state
+           +--ro vlan-id?   oc-vlan-types:vlan-id
+           +--ro name?      string
+           +--ro status?    enumeration
+module: openconfig-wavelength-router
+           +--ro state
+           |  +--ro index?             uint32
+           |  +--ro lower-frequency?   oc-opt-types:frequency-type
+           |  +--ro upper-frequency?   oc-opt-types:frequency-type
+           |  +--ro state
+           |     +--ro port-name?   oc-if:base-interface-ref
+           |  +--ro state
+           |     +--ro port-name?   oc-if:base-interface-ref
+                 +--ro state
+                    +--ro lower-frequency?   oc-opt-types:frequency-type
+                    +--ro upper-frequency?   oc-opt-types:frequency-type
+                    +--ro psd?               decimal64
+module: tailf-confd-monitoring
+  +--ro confd-state
+     +--ro version?              string
+     +--ro smp!
+     |  +--ro number-of-threads?   uint16
+     +--ro epoll?                boolean
+     +--ro daemon-status?        enumeration
+     +--ro read-only-mode?       empty
+     +--ro upgrade-mode?         empty
+     +--ro ha!
+     |  +--ro mode?              enumeration
+     |  +--ro node-id?           ha-node-id
+     |  +--ro master-node-id?    string
+     |  +--ro connected-slave*   string
+     |  +--ro pending-slave*     string
+     +--ro loaded-data-models
+     |  +--ro data-model* [name]
+     |     +--ro name                     string
+     |     +--ro revision?                string
+     |     +--ro namespace?               inet:uri
+     |     +--ro prefix?                  string
+     |     +--ro (exported)?
+     |        |  +--ro exported-to-all?   empty
+     |           +--ro exported-to*       union
+     +--ro netconf!
+     |  +--ro listen
+     |     +--ro tcp* []
+     |     |  +--ro ip?     inet:ip-address
+     |     |  +--ro port?   inet:port-number
+     |     +--ro ssh* []
+     |        +--ro ip?     inet:ip-address
+     |        +--ro port?   inet:port-number
+     +--ro cli!
+     |  +--ro listen
+     |     +--ro ssh* []
+     |        +--ro ip?     inet:ip-address
+     |        +--ro port?   inet:port-number
+     +--ro webui!
+     |  +--ro listen
+     |     +--ro tcp* []
+     |     |  +--ro ip?     inet:ip-address
+     |     |  +--ro port?   inet:port-number
+     |     +--ro ssl* []
+     |        +--ro ip?     inet:ip-address
+     |        +--ro port?   inet:port-number
+     +--ro rest!
+     |  +--ro listen
+     |     +--ro tcp* []
+     |     |  +--ro ip?     inet:ip-address
+     |     |  +--ro port?   inet:port-number
+     |     +--ro ssl* []
+     |        +--ro ip?     inet:ip-address
+     |        +--ro port?   inet:port-number
+     +--ro snmp!
+     |  +--ro listen
+     |  |  +--ro udp* []
+     |  |     +--ro ip?     inet:ip-address
+     |  |     +--ro port?   inet:port-number
+     |  +--ro mib*         string
+     |  +--ro version
+     |  |  +--ro v1?    empty
+     |  |  +--ro v2c?   empty
+     |  |  +--ro v3?    empty
+     |  +--ro engine-id?   string
+     +--ro internal
+        +--ro callpoints
+        |  +--ro callpoint* [id]
+        |  |  +--ro id              string
+        |  |  +--ro (registration-type)?
+        |  |  |  |  +--ro daemon
+        |  |  |  |     +--ro id?      uint32
+        |  |  |  |     +--ro name?    string
+        |  |  |  |     +--ro error?   enumeration
+        |  |  |  |  +--ro path?     string
+        |  |  |  |  +--ro range* []
+        |  |  |  |     +--ro lower?     string
+        |  |  |  |     +--ro upper?     string
+        |  |  |  |     +--ro default?   empty
+        |  |  |  |     +--ro daemon
+        |  |  |  |        +--ro id?      uint32
+        |  |  |  |        +--ro name?    string
+        |  |  |  |        +--ro error?   enumeration
+        |  |  |     +--ro file?     string
+        |  |  +--ro error?          enumeration
+        |  +--ro validationpoint* [id]
+        |  |  +--ro id              string
+        |  |  +--ro (registration-type)?
+        |  |  |  |  +--ro daemon
+        |  |  |  |     +--ro id?      uint32
+        |  |  |  |     +--ro name?    string
+        |  |  |  |     +--ro error?   enumeration
+        |  |  |  |  +--ro path?     string
+        |  |  |  |  +--ro range* []
+        |  |  |  |     +--ro lower?     string
+        |  |  |  |     +--ro upper?     string
+        |  |  |  |     +--ro default?   empty
+        |  |  |  |     +--ro daemon
+        |  |  |  |        +--ro id?      uint32
+        |  |  |  |        +--ro name?    string
+        |  |  |  |        +--ro error?   enumeration
+        |  |  |     +--ro file?     string
+        |  |  +--ro error?          enumeration
+        |  +--ro actionpoint* [id]
+        |  |  +--ro id              string
+        |  |  +--ro (registration-type)?
+        |  |  |  |  +--ro daemon
+        |  |  |  |     +--ro id?      uint32
+        |  |  |  |     +--ro name?    string
+        |  |  |  |     +--ro error?   enumeration
+        |  |  |  |  +--ro path?     string
+        |  |  |  |  +--ro range* []
+        |  |  |  |     +--ro lower?     string
+        |  |  |  |     +--ro upper?     string
+        |  |  |  |     +--ro default?   empty
+        |  |  |  |     +--ro daemon
+        |  |  |  |        +--ro id?      uint32
+        |  |  |  |        +--ro name?    string
+        |  |  |  |        +--ro error?   enumeration
+        |  |  |     +--ro file?     string
+        |  |  +--ro error?          enumeration
+        |  +--ro snmp-inform-callback* [id]
+        |  |  +--ro id              string
+        |  |  +--ro (registration-type)?
+        |  |  |  |  +--ro daemon
+        |  |  |  |     +--ro id?      uint32
+        |  |  |  |     +--ro name?    string
+        |  |  |  |     +--ro error?   enumeration
+        |  |  |  |  +--ro path?     string
+        |  |  |  |  +--ro range* []
+        |  |  |  |     +--ro lower?     string
+        |  |  |  |     +--ro upper?     string
+        |  |  |  |     +--ro default?   empty
+        |  |  |  |     +--ro daemon
+        |  |  |  |        +--ro id?      uint32
+        |  |  |  |        +--ro name?    string
+        |  |  |  |        +--ro error?   enumeration
+        |  |  |     +--ro file?     string
+        |  |  +--ro error?          enumeration
+        |  +--ro snmp-notification-subscription* [id]
+        |  |  +--ro id              string
+        |  |  +--ro (registration-type)?
+        |  |  |  |  +--ro daemon
+        |  |  |  |     +--ro id?      uint32
+        |  |  |  |     +--ro name?    string
+        |  |  |  |     +--ro error?   enumeration
+        |  |  |  |  +--ro path?     string
+        |  |  |  |  +--ro range* []
+        |  |  |  |     +--ro lower?     string
+        |  |  |  |     +--ro upper?     string
+        |  |  |  |     +--ro default?   empty
+        |  |  |  |     +--ro daemon
+        |  |  |  |        +--ro id?      uint32
+        |  |  |  |        +--ro name?    string
+        |  |  |  |        +--ro error?   enumeration
+        |  |  |     +--ro file?     string
+        |  |  +--ro error?          enumeration
+        |  +--ro error-formatting-callback* [id]
+        |  |  +--ro id              string
+        |  |  +--ro (registration-type)?
+        |  |  |  |  +--ro daemon
+        |  |  |  |     +--ro id?      uint32
+        |  |  |  |     +--ro name?    string
+        |  |  |  |     +--ro error?   enumeration
+        |  |  |  |  +--ro path?     string
+        |  |  |  |  +--ro range* []
+        |  |  |  |     +--ro lower?     string
+        |  |  |  |     +--ro upper?     string
+        |  |  |  |     +--ro default?   empty
+        |  |  |  |     +--ro daemon
+        |  |  |  |        +--ro id?      uint32
+        |  |  |  |        +--ro name?    string
+        |  |  |  |        +--ro error?   enumeration
+        |  |  |     +--ro file?     string
+        |  |  +--ro error?          enumeration
+        |  +--ro typepoint* [id]
+        |  |  +--ro id              string
+        |  |  +--ro (registration-type)?
+        |  |  |  |  +--ro daemon
+        |  |  |  |     +--ro id?      uint32
+        |  |  |  |     +--ro name?    string
+        |  |  |  |     +--ro error?   enumeration
+        |  |  |  |  +--ro path?     string
+        |  |  |  |  +--ro range* []
+        |  |  |  |     +--ro lower?     string
+        |  |  |  |     +--ro upper?     string
+        |  |  |  |     +--ro default?   empty
+        |  |  |  |     +--ro daemon
+        |  |  |  |        +--ro id?      uint32
+        |  |  |  |        +--ro name?    string
+        |  |  |  |        +--ro error?   enumeration
+        |  |  |     +--ro file?     string
+        |  |  +--ro error?          enumeration
+        |  +--ro notification-stream-replay* [name]
+        |  |  +--ro name              string
+        |  |  +--ro replay-support?   enumeration
+        |  |  +--ro (registration-type)?
+        |  |  |  |  +--ro daemon
+        |  |  |  |     +--ro id?      uint32
+        |  |  |  |     +--ro name?    string
+        |  |  |  |     +--ro error?   enumeration
+        |  |  |  |  +--ro path?       string
+        |  |  |  |  +--ro range* []
+        |  |  |  |     +--ro lower?     string
+        |  |  |  |     +--ro upper?     string
+        |  |  |  |     +--ro default?   empty
+        |  |  |  |     +--ro daemon
+        |  |  |  |        +--ro id?      uint32
+        |  |  |  |        +--ro name?    string
+        |  |  |  |        +--ro error?   enumeration
+        |  |  |     +--ro file?       string
+        |  |  +--ro error?            enumeration
+        |  +--ro authentication-callback!
+        |  |  +--ro enabled?        boolean
+        |  |  +--ro (registration-type)?
+        |  |  |  |  +--ro daemon
+        |  |  |  |     +--ro id?      uint32
+        |  |  |  |     +--ro name?    string
+        |  |  |  |     +--ro error?   enumeration
+        |  |  |  |  +--ro path?     string
+        |  |  |  |  +--ro range* []
+        |  |  |  |     +--ro lower?     string
+        |  |  |  |     +--ro upper?     string
+        |  |  |  |     +--ro default?   empty
+        |  |  |  |     +--ro daemon
+        |  |  |  |        +--ro id?      uint32
+        |  |  |  |        +--ro name?    string
+        |  |  |  |        +--ro error?   enumeration
+        |  |  |     +--ro file?     string
+        |  |  +--ro error?          enumeration
+        |  +--ro authorization-callbacks!
+        |     +--ro enabled?        boolean
+        |     +--ro (registration-type)?
+        |     |  |  +--ro daemon
+        |     |  |     +--ro id?      uint32
+        |     |  |     +--ro name?    string
+        |     |  |     +--ro error?   enumeration
+        |     |  |  +--ro path?     string
+        |     |  |  +--ro range* []
+        |     |  |     +--ro lower?     string
+        |     |  |     +--ro upper?     string
+        |     |  |     +--ro default?   empty
+        |     |  |     +--ro daemon
+        |     |  |        +--ro id?      uint32
+        |     |  |        +--ro name?    string
+        |     |  |        +--ro error?   enumeration
+        |     |     +--ro file?     string
+        |     +--ro error?          enumeration
+        +--ro cdb
+           +--ro datastore* [name]
+           |  +--ro name                            datastore-name
+           |  +--ro transaction-id?                 string
+           |  +--ro write-queue?                    uint32
+           |  +--ro filename?                       string
+           |  +--ro disk-size?                      size-in-bytes
+           |  +--ro ram-size?                       size-in-bytes
+           |  +--ro read-locks?                     uint32
+           |  +--ro write-lock-set?                 boolean
+           |  +--ro subscription-lock-set?          boolean
+           |  +--ro waiting-for-replication-sync?   boolean
+           |  +--ro pending-subscription-sync!
+           |  |  +--ro priority?         subscription-priority
+           |  |  +--ro notification* []
+           |  |  |  +--ro client-name?        string
+           |  |  |  +--ro subscription-ids*   subscription-id
+           |  |  +--ro time-remaining?   union
+           |  +--ro pending-notification-queue* []
+           |     +--ro notification* []
+           |        +--ro priority?           subscription-priority
+           |        +--ro client-name?        string
+           |        +--ro subscription-ids*   subscription-id
+           +--ro client* []
+              +--ro name?           string
+              +--ro info?           string
+              +--ro type?           enumeration
+              +--ro datastore?      union
+              +--ro lock?           enumeration
+              +--ro subscription* []
+                 +--ro datastore?   datastore-name
+                 +--ro twophase?    empty
+                 +--ro priority?    subscription-priority
+                 +--ro id?          subscription-id
+                 +--ro path?        string
+                 +--ro error?       enumeration
+module: tailf-netconf-query
+    |  +--ro output
+    |     +--ro query-handle?   uint32
+    |  +--ro output
+    |     +--ro query-result
+    |        +--ro result* []
+    |           +--ro select* []
+    |              +--ro label?         string
+    |              +--ro (select-result)?
+    |                 |  +--ro path?    instance-identifier
+    |                 |  +--ro value?   string
+    |                    +--ro data?    <anyxml>
+module: tailf-netconf-transactions
